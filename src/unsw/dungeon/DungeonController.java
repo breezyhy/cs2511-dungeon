@@ -34,12 +34,18 @@ public class DungeonController {
     @FXML
     public void initialize() {
         Image ground = new Image("/dirt_0_new.png");
+        Image blank = new Image("/blank.png");
 
         // Add the ground first so it is below all other entities
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
             }
+        }
+        
+        for (int y = 0; y < dungeon.getHeight(); y++) {
+            int x = dungeon.getWidth();
+            squares.add(new ImageView(blank), x, y);
         }
 
         for (ImageView entity : initialEntities)
