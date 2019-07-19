@@ -38,7 +38,13 @@ public abstract class DungeonLoader {
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
+            dungeon.attachBoulderObservers();
+            dungeon.updateAll();
         }
+
+        JSONObject goals = json.getJSONObject("goal-condition");
+        DungeonGoals dGoals = loadGoals(goals, dungeon);
+        dungeon.setGoal(dGoals);
         return dungeon;
     }
 
@@ -65,19 +71,107 @@ public abstract class DungeonLoader {
             onLoad(exit);
             entity = exit;
             break;
-
-
+        case "switch":
+            FloorSwitch floorSwitch = new FloorSwitch(x, y);
+            onLoad(floorSwitch);
+            entity = floorSwitch;
+            break;
+        case "boulder":
+            Boulder boulder = new Boulder(dungeon, x, y);
+            onLoad(boulder);
+            entity = boulder;
+            break;
+        case "key":
+            Key key = new Key(x, y);
+            onLoad(key);
+            entity = key;
+            break;
+        case "door":
+            Door door = new Door(x, y);
+            onLoad(door);
+            entity = door;
+            break;
+        case "sword":
+            Sword sword = new Sword(x, y);
+            onLoad(sword);
+            entity = sword;
+            break;
+        case "bomb":
+            Bomb_Unlit bomb = new Bomb_Unlit(x, y);
+            onLoad(bomb);
+            entity = bomb;
+            break;
+        case "treasure":
+            Treasure treasure = new Treasure(x, y);
+            onLoad(treasure);
+            entity = treasure;
+            break;
+        case "invincibility":
+            Potion potion = new Potion(x, y);
+            onLoad(potion);
+            entity = potion;
+            break;
+        case "enemy":
+            Enemy enemy = new Enemy(dungeon, x, y);
+            onLoad(enemy);
+            entity = enemy;
+            break;
+        default:
+            break;
         // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
     }
 
     public abstract void onLoad(Entity player);
-
     public abstract void onLoad(Wall wall);
-
     public abstract void onLoad(Exit exit);
+    public abstract void onLoad(FloorSwitch floorSwitch);
+    public abstract void onLoad(Boulder boulder);
+    public abstract void onLoad(Key key);
+    public abstract void onLoad(Door door);
+    public abstract void onLoad(Sword sword);
+    public abstract void onLoad(Bomb_Unlit bomb);
+    public abstract void onLoad(Treasure treasure);
+    public abstract void onLoad(Potion potion);
+    public abstract void onLoad(Enemy enemy);
 
-    // TODO Create additional abstract methods for the other entities
+    private DungeonGoals loadGoals(JSONObject jsongoals, Dungeon dungeon){
+        String type = jsongoals.getString("goal");
+
+        DungeonGoals dGoals = null;
+        switch(type) {
+            case "AND":
+            case "OR":
+                MultipleGoals mGoal = new MultipleGoals(type);
+                JSONArray subgoals = jsongoals.getJSONArray("subgoals");
+                for (int i = 0; i < subgoals.length(); i++) {
+                    DungeonGoals subgoal = loadGoals(subgoals.getJSONObject(i), dungeon);
+                    mGoal.add(subgoal);
+                }
+                dGoals = mGoal;
+                break;
+            case "exit":
+                ExitGoal sGoal = new ExitGoal("exit");
+                dGoals = sGoal;
+                break;
+            case "enemies":
+                EnemiesGoal eGoal = new EnemiesGoal("enemies");
+                dGoals = eGoal;
+                break;
+            case "treasure":
+                TreasureGoal tGoal = new TreasureGoal("treasure");
+                dGoals = tGoal;
+                break;
+            case "boulders":
+                FloorSwitchGoal fGoal = new FloorSwitchGoal("boulders");
+                dGoals = fGoal;
+                break;
+            default:
+                break;
+        }
+
+        return dGoals;
+    }
 
 }

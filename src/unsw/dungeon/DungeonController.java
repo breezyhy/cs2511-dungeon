@@ -35,6 +35,7 @@ public class DungeonController {
     public void initialize() {
         Image ground = new Image("/dirt_0_new.png");
         Image blank = new Image("/blank.png");
+        Image backpack = new Image("/backpack.png");
 
         // Add the ground first so it is below all other entities
         for (int x = 0; x < dungeon.getWidth(); x++) {
@@ -43,7 +44,9 @@ public class DungeonController {
             }
         }
         
-        for (int y = 0; y < dungeon.getHeight(); y++) {
+        squares.add(new ImageView(backpack), dungeon.getWidth(), 0);
+
+        for (int y = 1; y < dungeon.getHeight(); y++) {
             int x = dungeon.getWidth();
             squares.add(new ImageView(blank), x, y);
         }
@@ -68,6 +71,10 @@ public class DungeonController {
         case RIGHT:
             player.moveRight();
             break;
+        case R:
+            // Restart the game
+        case N:
+            // Get to the next level
         default:
             break;
         }

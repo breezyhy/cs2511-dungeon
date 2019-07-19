@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * @author Robert Clifton-Everest
  *
  */
-public class Entity {
+public abstract class Entity {
 
     // IntegerProperty is used so that changes to the entities position can be
     // externally observed.
@@ -38,5 +38,25 @@ public class Entity {
 
     public int getX() {
         return x().get();
+    }
+
+    public boolean resolveCollision(EntityConsumable obj){
+        return false;
+    }
+
+    public boolean resolveCollision(EntityBlocking obj) {
+        return false;
+    }
+
+    public boolean resolveCollision(EntitySemiblocking obj){
+        return false;
+    }
+
+    public boolean resolveCollision(EntityNonblocking obj){
+        return true;
+    }
+
+    public boolean resolveCollision(EntityMoveable obj){
+        return false;
     }
 }
