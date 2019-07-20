@@ -43,6 +43,7 @@ public abstract class DungeonLoader {
         dungeon.attachBoulderObservers();
         dungeon.updateAllBoulders();
         dungeon.attachExitObservers();
+        dungeon.initiateTicker();
         
         JSONObject goals = json.getJSONObject("goal-condition");
         DungeonGoals dGoals = loadGoals(goals, dungeon);

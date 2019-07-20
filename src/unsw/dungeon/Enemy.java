@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Enemy extends EntityMoveable implements MultipleSubject {
+public class Enemy extends EntityMoveable implements MultipleSubject, GameTickSubscriber {
 
     private MultipleObserver enemyObserver = null;
+    private int moveCount;
 
     public Enemy(Dungeon dungeon, int x, int y) {
         super(dungeon, x, y);
+        this.moveCount = 0;
     }
 
     public void moveUp() {
@@ -56,6 +58,10 @@ public class Enemy extends EntityMoveable implements MultipleSubject {
     }
     
     public boolean resolveCollision(EntityBlocking e) {
+        if (e instanceof Bomb_Lit) {
+            die();
+            notifyObservers();
+        }
         return false;
     }
 
@@ -94,5 +100,22 @@ public class Enemy extends EntityMoveable implements MultipleSubject {
         if (enemyObserver != null) enemyObserver.update(this);
     }
 
+    public void moveToPlayer() {
+        Player player = dungeon().getPlayer();
+        int deltaX = player.getX() - getX();
+        int deltaY = player.getY() - getY();
+
+        if (deltaX > 0) moveRight();
+        if (deltaX < 0) moveLeft();
+        if (deltaY > 0) moveDown();
+        if (deltaY < 0) moveUp();
+    }
+
+    @Override
+    public void trigger() {
+        this.moveCount++;
+        // Enemy moves to player every 2 keystrokes by player and able to move diagonally
+        if (this.moveCount % 2 == 0) moveToPlayer();
+    }
 
 }

@@ -18,7 +18,10 @@ public class Backpack {
     }
 
     public void removeConsumables(EntityConsumable i){
-        if (itemList.contains(i)) itemList.remove(i);
+        if (itemList.contains(i)) {
+            ((Entity) i).x().set(storingColumn + 1);
+            itemList.remove(i);
+        }
     }
 
     public int getStoringColumn(){

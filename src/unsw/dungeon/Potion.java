@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Potion extends EntityConsumable {
+public class Potion extends EntityConsumable implements GameTickSubscriber {
 
     private int useCount;
     // Backpack is stored here because the potion needs to be detached from backpack once it expires
@@ -23,6 +23,8 @@ public class Potion extends EntityConsumable {
     }
 
     public void decrementTime(){
+        // Do not decrement if there is no backpack
+        if (getBackpack() == null) return;
         this.useCount--;
         if (useCount < 0) {
             used(getBackpack());
@@ -31,6 +33,11 @@ public class Potion extends EntityConsumable {
 
     public boolean stillActive(){
         return (useCount > 0);
+    }
+
+    @Override
+    public void trigger() {
+        decrementTime();
     }
 
 }

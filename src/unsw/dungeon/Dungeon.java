@@ -21,6 +21,7 @@ public class Dungeon {
     private List<Entity> entities;
     private Player player;
     private DungeonGoals goals;
+    private GameTick gametick;
 
     public Dungeon(int width, int height) {
         this.width = width;
@@ -28,6 +29,7 @@ public class Dungeon {
         this.entities = new ArrayList<>();
         this.player = null;
         this.goals = null;
+        this.gametick = null;
     }
 
     public int getWidth() {
@@ -64,6 +66,42 @@ public class Dungeon {
         return collide;
     }
 
+    public List<Entity> getSurroundingEntity(int x, int y) {
+        List<Entity> collide = new ArrayList<>();
+        for (Entity entity : entities) {
+            if (entity.getX() == (x + 1) && entity.getY() == y) {
+                collide.add(entity);
+            }
+            if (entity.getX() == (x - 1) && entity.getY() == y) {
+                collide.add(entity);
+            }
+            if (entity.getX() == x && entity.getY() == (y + 1)) {
+                collide.add(entity);
+            }
+            if (entity.getX() == x && entity.getY() == (y - 1)) {
+                collide.add(entity);
+            }
+        }
+        return collide;
+    }
+
+    public ArrayList<GameTickSubscriber> getTickListener() {
+        ArrayList<GameTickSubscriber> listener = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e instanceof GameTickSubscriber) listener.add((GameTickSubscriber) e);
+        }
+        return listener;
+    }
+
+    // Game tick loader
+    // Needs to be loaded initially
+    public void initiateTicker(){
+        this.gametick = new GameTick(this);
+        player.registerObserver(this.gametick);
+    }
+
+    // Entity observer interactions
+    // Needs to be loaded initially
     public void attachBoulderObservers(){
         List<Boulder> boulders = new ArrayList<>();
         List<FloorSwitch> fswitches = new ArrayList<>();
@@ -107,6 +145,8 @@ public class Dungeon {
         }
     }
 
+
+    // Loader's functions
     public Exit getExit() {
         for (Entity e : entities) {
             if (e instanceof Exit) return ((Exit) e);
