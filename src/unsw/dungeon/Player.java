@@ -8,9 +8,10 @@ import java.util.List;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends EntityMoveable {
+public class Player extends EntityMoveable implements Subject {
 
     private Backpack backpack;
+    private Observer exit = null;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -22,27 +23,39 @@ public class Player extends EntityMoveable {
     }
 
     public void moveUp() {
+        if (!alive()) return;
         if (getY() <= 0) return;
-        if (collide(getX(), getY() - 1)) 
+        if (collide(getX(), getY() - 1)) {
             y().set(getY() - 1);
+            notifyObservers();
+        }
     }
 
     public void moveDown() {
+        if (!alive()) return;
         if (getY() >= dungeon().getHeight() - 1) return;
-        if (collide(getX(), getY() + 1))
+        if (collide(getX(), getY() + 1)){
             y().set(getY() + 1);
+            notifyObservers();
+        }
     }
 
     public void moveLeft() {
+        if (!alive()) return;
         if (getX() <= 0) return;
-        if (collide(getX() - 1, getY()))
+        if (collide(getX() - 1, getY())){
             x().set(getX() - 1);
+            notifyObservers();
+        }
     }
 
     public void moveRight() {
+        if (!alive()) return;
         if (getX() >= dungeon().getWidth() - 1) return;
-        if (collide(getX() + 1, getY()))
+        if (collide(getX() + 1, getY())){
             x().set(getX() + 1);
+            notifyObservers();
+        }
     }
 
     public boolean collide(int x, int y){
@@ -52,7 +65,6 @@ public class Player extends EntityMoveable {
         for (Entity f : colliding) {
             // System.out.println("Colliding with " + f.getClass() + " . Type: " + this.getClass());
             if (!f.resolveCollision(this)) return false;
-
         }
         return true;
     }
@@ -79,6 +91,21 @@ public class Player extends EntityMoveable {
     // If the calling function is a lit bomb, it won't do anything apart from either killing the player or leaving the player alive
     public void isImmune(Bomb_Lit b){
 
+    }
+
+    @Override
+    public void registerObserver(Observer o) {
+        this.exit = o;
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        if (exit == o) this.exit = null;
+    }
+
+    @Override
+    public void notifyObservers() {
+        if (exit != null) exit.update(this);
     }
 
 }

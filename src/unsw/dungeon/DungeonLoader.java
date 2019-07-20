@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,10 +39,11 @@ public abstract class DungeonLoader {
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
-            dungeon.attachBoulderObservers();
-            dungeon.updateAll();
         }
-
+        dungeon.attachBoulderObservers();
+        dungeon.updateAllBoulders();
+        dungeon.attachExitObservers();
+        
         JSONObject goals = json.getJSONObject("goal-condition");
         DungeonGoals dGoals = loadGoals(goals, dungeon);
         dungeon.setGoal(dGoals);
@@ -154,18 +156,22 @@ public abstract class DungeonLoader {
             case "exit":
                 ExitGoal sGoal = new ExitGoal("exit");
                 dGoals = sGoal;
+                attachGoal(sGoal, dungeon);
                 break;
             case "enemies":
                 EnemiesGoal eGoal = new EnemiesGoal("enemies");
                 dGoals = eGoal;
+                attachGoal(eGoal, dungeon);
                 break;
             case "treasure":
                 TreasureGoal tGoal = new TreasureGoal("treasure");
                 dGoals = tGoal;
+                attachGoal(tGoal, dungeon);
                 break;
             case "boulders":
                 FloorSwitchGoal fGoal = new FloorSwitchGoal("boulders");
                 dGoals = fGoal;
+                attachGoal(fGoal, dungeon);
                 break;
             default:
                 break;
@@ -174,4 +180,38 @@ public abstract class DungeonLoader {
         return dGoals;
     }
 
+    private void attachGoal(ExitGoal goal, Dungeon dungeon){
+        Exit exit = dungeon.getExit();
+        if (exit == null) throw new UnsupportedOperationException();
+        // Deal with exit and goal
+        exit.registerObserver(goal);
+    }
+
+    private void attachGoal(EnemiesGoal goal, Dungeon dungeon){
+        ArrayList<Enemy> enemies = dungeon.getEnemies();
+        if (enemies.size() == 0) throw new UnsupportedOperationException();
+        // Deal with enemies and goal
+        for (Enemy e : enemies){
+            System.out.println("Enemy registered on observer");
+            e.registerObserver(goal);
+        }
+    }
+
+    private void attachGoal(TreasureGoal goal, Dungeon dungeon){
+        ArrayList<Treasure> treasures = dungeon.getTreasures();
+        if (treasures.size() == 0) throw new UnsupportedOperationException();
+        // Deal with treasures and goal
+        for (Treasure t : treasures){
+            t.registerObserver(goal);
+        }
+    }
+
+    private void attachGoal(FloorSwitchGoal goal, Dungeon dungeon){
+        ArrayList<FloorSwitch> fs = dungeon.getFloorSwitch();
+        if (fs.size() == 0) throw new UnsupportedOperationException();
+        // Deal with floorswitches and goal
+        for (FloorSwitch flSwitch : fs){
+            flSwitch.registerObserver(goal);
+        }
+    }
 }

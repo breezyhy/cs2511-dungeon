@@ -82,7 +82,23 @@ public class Dungeon {
         }
     }
 
-    public void updateAll(){
+    public void attachExitObservers(){
+        Player player = null;
+        Exit exit = null;
+        for (Entity entity : entities) {
+            if (entity instanceof Player) {
+                player = (Player) entity;
+            } else if (entity instanceof Exit) {
+                exit = (Exit) entity;
+            }
+        }
+
+        if (exit == null) return;
+        System.out.println("Attaching exit-player observer");
+        player.registerObserver(exit);
+    }
+
+    public void updateAllBoulders(){
         List<Boulder> boulders = new ArrayList<>();
         for (Entity entity : entities) {
             if ((entity instanceof Boulder)) {
@@ -91,5 +107,34 @@ public class Dungeon {
         }
     }
 
-    
+    public Exit getExit() {
+        for (Entity e : entities) {
+            if (e instanceof Exit) return ((Exit) e);
+        }
+        return null;
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e instanceof Enemy) enemies.add((Enemy) e);
+        }
+        return enemies;
+    }
+
+    public ArrayList<Treasure> getTreasures() {
+        ArrayList<Treasure> treasures = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e instanceof Treasure) treasures.add((Treasure) e);
+        }
+        return treasures;
+    }
+
+    public ArrayList<FloorSwitch> getFloorSwitch () {
+        ArrayList<FloorSwitch> fs = new ArrayList<>();
+        for (Entity e : entities) {
+            if (e instanceof FloorSwitch) fs.add((FloorSwitch) e);
+        }
+        return fs;
+    }
 }

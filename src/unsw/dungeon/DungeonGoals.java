@@ -1,7 +1,6 @@
 package unsw.dungeon;
 
 public abstract class DungeonGoals {
-    String name;
 	public void add (DungeonGoals goal) {
 		throw new UnsupportedOperationException();
 	}
