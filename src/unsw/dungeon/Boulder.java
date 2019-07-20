@@ -9,6 +9,8 @@ public class Boulder extends EntitySemiblocking implements Subject {
 
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
 
+    // TODO add a method to destroy boulder upon bomb impact
+
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
@@ -50,6 +52,16 @@ public class Boulder extends EntitySemiblocking implements Subject {
         }
 
         return collide;
+    }
+
+    @Override
+    public boolean resolveCollision(EntityBlocking obj){
+        if (obj instanceof Bomb_Lit) {
+            x().set(dungeon.getWidth() + 1);
+            y().set(dungeon.getHeight() + 1);
+        }
+
+        return true;
     }
 
     @Override

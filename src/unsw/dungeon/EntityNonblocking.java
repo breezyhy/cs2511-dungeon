@@ -4,7 +4,6 @@ public abstract class EntityNonblocking extends Entity {
 
     public EntityNonblocking(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
     }
 
     public boolean resolveCollision(EntityConsumable obj){

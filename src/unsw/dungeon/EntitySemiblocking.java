@@ -4,7 +4,6 @@ public abstract class EntitySemiblocking extends Entity {
 
     public EntitySemiblocking(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
     }
 
 

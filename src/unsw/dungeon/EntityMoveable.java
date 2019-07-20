@@ -17,8 +17,8 @@ public abstract class EntityMoveable extends Entity {
 
     public void die(){
         // Placeholder of dead moveable
-        x().set(dungeon.getWidth());
-        y().set(dungeon.getHeight());
+        x().set(dungeon.getWidth() + 1);
+        y().set(dungeon.getHeight() + 1);
         this.alive = false;
     }
 

@@ -6,7 +6,6 @@ public abstract class EntityConsumable extends Entity {
 
     public EntityConsumable(int x, int y) {
         super(x, y);
-        // TODO Auto-generated constructor stub
     }
 
     public void setBackpack(Backpack backpack){

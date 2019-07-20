@@ -44,4 +44,6 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
         if (exitObserver != null) exitObserver.update(this);
     }
 
+    // TODO
+    // Method to check whether all other goals has been satisfied
 }

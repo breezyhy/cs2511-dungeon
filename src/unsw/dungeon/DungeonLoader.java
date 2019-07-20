@@ -121,7 +121,6 @@ public abstract class DungeonLoader {
             break;
         default:
             break;
-        // TODO Handle other possible entities
         }
         dungeon.addEntity(entity);
     }
