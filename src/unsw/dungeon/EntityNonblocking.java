@@ -6,7 +6,7 @@ public abstract class EntityNonblocking extends Entity {
         super(x, y);
     }
 
-    public boolean resolveCollision(EntityConsumable obj){
+    public boolean resolveCollision(EntityConsumable obj) {
         return true;
     }
 
@@ -14,15 +14,15 @@ public abstract class EntityNonblocking extends Entity {
         return false;
     }
 
-    public boolean resolveCollision(EntitySemiblocking obj){
+    public boolean resolveCollision(EntitySemiblocking obj) {
         return true;
     }
 
-    public boolean resolveCollision(EntityNonblocking obj){
+    public boolean resolveCollision(EntityNonblocking obj) {
         return true;
     }
 
-    public boolean resolveCollision(EntityMoveable obj){
+    public boolean resolveCollision(EntityMoveable obj) {
         return true;
     }
 }

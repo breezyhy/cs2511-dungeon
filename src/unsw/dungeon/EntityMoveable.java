@@ -11,22 +11,22 @@ public abstract class EntityMoveable extends Entity {
         this.alive = true;
     }
 
-    public Dungeon dungeon(){
+    public Dungeon dungeon() {
         return this.dungeon;
     }
 
-    public void die(){
+    public void die() {
         // Placeholder of dead moveable
         x().set(dungeon.getWidth() + 1);
         y().set(dungeon.getHeight() + 1);
         this.alive = false;
     }
 
-    public boolean alive(){
+    public boolean alive() {
         return this.alive;
     }
 
-    public boolean resolveCollision(EntityConsumable obj){
+    public boolean resolveCollision(EntityConsumable obj) {
         return false;
     }
 
@@ -34,15 +34,15 @@ public abstract class EntityMoveable extends Entity {
         return false;
     }
 
-    public boolean resolveCollision(EntitySemiblocking obj){
+    public boolean resolveCollision(EntitySemiblocking obj) {
         return false;
     }
 
-    public boolean resolveCollision(EntityNonblocking obj){
+    public boolean resolveCollision(EntityNonblocking obj) {
         return true;
     }
 
-    public boolean resolveCollision(EntityMoveable obj){
+    public boolean resolveCollision(EntityMoveable obj) {
         return false;
     }
 }

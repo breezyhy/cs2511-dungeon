@@ -8,12 +8,13 @@ public abstract class EntityConsumable extends Entity {
         super(x, y);
     }
 
-    public void setBackpack(Backpack backpack){
+    public void setBackpack(Backpack backpack) {
         this.backpack = backpack;
     }
 
-    // Consumed items will put itself inside the backpack, and then disappear from the screen
-    public void storeBackpack(Backpack backpack){
+    // Consumed items will put itself inside the backpack, and then disappear from
+    // the screen
+    public void storeBackpack(Backpack backpack) {
         backpack.addConsumables(this);
         setBackpack(backpack);
     }
@@ -22,7 +23,9 @@ public abstract class EntityConsumable extends Entity {
         return backpack;
     }
 
-    public void used(Backpack backpack){
+    public void used() {
+        if (backpack == null)
+            return;
         backpack.removeConsumables(this);
     }
 
@@ -32,7 +35,7 @@ public abstract class EntityConsumable extends Entity {
         y().set(y);
     }
 
-    public boolean resolveCollision(EntityConsumable obj){
+    public boolean resolveCollision(EntityConsumable obj) {
         return false;
     }
 
@@ -40,15 +43,15 @@ public abstract class EntityConsumable extends Entity {
         return false;
     }
 
-    public boolean resolveCollision(EntitySemiblocking obj){
+    public boolean resolveCollision(EntitySemiblocking obj) {
         return false;
     }
 
-    public boolean resolveCollision(EntityNonblocking obj){
+    public boolean resolveCollision(EntityNonblocking obj) {
         return true;
     }
 
-    public boolean resolveCollision(EntityMoveable obj){
+    public boolean resolveCollision(EntityMoveable obj) {
         return true;
     }
 

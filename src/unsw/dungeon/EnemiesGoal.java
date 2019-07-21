@@ -8,33 +8,35 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
     private boolean achieved;
     private ArrayList<MultipleSubject> subjects;
 
-    public EnemiesGoal (String name){
+    public EnemiesGoal(String name) {
         // name should be either "AND" or "OR" for MultipleGoals
         this.name = name;
         this.achieved = false;
         this.subjects = new ArrayList<MultipleSubject>();
     }
-    
-    public void add (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
-	}
-    
-    public void remove (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
+
+    public void add(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
     }
-    
-    public boolean achieved () {
+
+    public void remove(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean achieved() {
         return achieved;
     }
 
     @Override
     public void update(MultipleSubject obj) {
         boolean done = true;
-        for (MultipleSubject enemy : subjects){
-            if (((Enemy) enemy).alive()) done = false;
+        for (MultipleSubject enemy : subjects) {
+            if (((Enemy) enemy).alive())
+                done = false;
         }
         achieved = done;
-        if (achieved) System.out.println("EnemiesGoal has been achieved");
+        if (achieved)
+            System.out.println("EnemiesGoal has been achieved");
     }
 
     @Override
@@ -45,8 +47,8 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
 
     @Override
     public void removeSubject(MultipleSubject obj) {
-        if (subjects.contains(obj)) subjects.remove(obj);
+        if (subjects.contains(obj))
+            subjects.remove(obj);
     }
-
 
 }

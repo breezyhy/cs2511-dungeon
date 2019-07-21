@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * An entity in the dungeon.
+ * 
  * @author Robert Clifton-Everest
  *
  */
@@ -16,6 +17,7 @@ public abstract class Entity {
 
     /**
      * Create an entity positioned in square (x,y)
+     * 
      * @param x
      * @param y
      */
@@ -40,7 +42,7 @@ public abstract class Entity {
         return x().get();
     }
 
-    public boolean resolveCollision(EntityConsumable obj){
+    public boolean resolveCollision(EntityConsumable obj) {
         return false;
     }
 
@@ -48,15 +50,15 @@ public abstract class Entity {
         return false;
     }
 
-    public boolean resolveCollision(EntitySemiblocking obj){
+    public boolean resolveCollision(EntitySemiblocking obj) {
         return false;
     }
 
-    public boolean resolveCollision(EntityNonblocking obj){
+    public boolean resolveCollision(EntityNonblocking obj) {
         return true;
     }
 
-    public boolean resolveCollision(EntityMoveable obj){
+    public boolean resolveCollision(EntityMoveable obj) {
         return false;
     }
 }

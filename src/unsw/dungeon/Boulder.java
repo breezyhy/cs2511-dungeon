@@ -24,24 +24,28 @@ public class Boulder extends EntitySemiblocking implements Subject {
         return this.prevY;
     }
 
-    private void setPrev(int x, int y){
+    private void setPrev(int x, int y) {
         prevX = x;
         prevY = y;
     }
 
     @Override
-    public boolean resolveCollision(EntityMoveable obj){
+    public boolean resolveCollision(EntityMoveable obj) {
         // System.out.println("Resolving collision");
-        if (!(obj instanceof Player)) return false;
+        if (!(obj instanceof Player))
+            return false;
 
         int deltaX = getX() - obj.getX();
         int deltaY = getY() - obj.getY();
         List<Entity> colliding = dungeon.getCollidingEntity(getX() + deltaX, getY() + deltaY);
-        if (colliding == null) return true;
+        if (colliding == null)
+            return true;
         boolean collide = true;
-        // System.out.println("boulder cooord" + getX() + "," + getY() + "collides with:" + colliding.size());
+        // System.out.println("boulder cooord" + getX() + "," + getY() + "collides
+        // with:" + colliding.size());
         for (Entity f : colliding) {
-            if (!f.resolveCollision(this)) collide = false;
+            if (!f.resolveCollision(this))
+                collide = false;
         }
 
         if (collide) {
@@ -55,7 +59,7 @@ public class Boulder extends EntitySemiblocking implements Subject {
     }
 
     @Override
-    public boolean resolveCollision(EntityBlocking obj){
+    public boolean resolveCollision(EntityBlocking obj) {
         if (obj instanceof Bomb_Lit) {
             x().set(dungeon.getWidth() + 1);
             y().set(dungeon.getHeight() + 1);
@@ -66,7 +70,8 @@ public class Boulder extends EntitySemiblocking implements Subject {
 
     @Override
     public void registerObserver(Observer o) {
-        if (!listObservers.contains(o)) listObservers.add(o);
+        if (!listObservers.contains(o))
+            listObservers.add(o);
     }
 
     @Override
@@ -80,5 +85,5 @@ public class Boulder extends EntitySemiblocking implements Subject {
             obs.update(this);
         }
     }
-   
+
 }

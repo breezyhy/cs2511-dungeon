@@ -9,22 +9,24 @@ public class Door extends EntitySemiblocking {
         this.accessible = new Door_Locked();
     }
 
-    public void switchState () {
+    public void switchState() {
         accessible.trigger(this);
     }
 
-    public void setState (DoorState accessible) {
+    public void setState(DoorState accessible) {
         this.accessible = accessible;
     }
 
     public boolean accessible() {
         return accessible.showState();
     }
-    
+
     @Override
-    public boolean resolveCollision(EntityMoveable obj){
-        if (!(obj instanceof Player)) return false;
-        if (accessible()) return true;
+    public boolean resolveCollision(EntityMoveable obj) {
+        if (!(obj instanceof Player))
+            return false;
+        if (accessible())
+            return true;
         Player player = (Player) obj;
         if (player.resolveCollision(this)) {
             switchState();

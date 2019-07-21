@@ -8,42 +8,46 @@ public class TreasureGoal extends DungeonGoals implements MultipleObserver {
     private boolean achieved;
     private ArrayList<MultipleSubject> subjects;
 
-    public TreasureGoal (String name){
+    public TreasureGoal(String name) {
         // name should be either "AND" or "OR" for MultipleGoals
         this.name = name;
         this.achieved = false;
         this.subjects = new ArrayList<MultipleSubject>();
     }
-    
-    public void add (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
-	}
-    
-    public void remove (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
+
+    public void add(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
     }
-    
-    public boolean achieved () {
+
+    public void remove(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean achieved() {
         return achieved;
     }
 
     @Override
     public void update(MultipleSubject obj) {
         boolean done = true;
-        for (MultipleSubject treasure : subjects){
-            if (!((Treasure) treasure).collected()) done = false;
+        for (MultipleSubject treasure : subjects) {
+            if (!((Treasure) treasure).collected())
+                done = false;
         }
         achieved = done;
-        if (achieved) System.out.println("TreasureGoal has been achieved");
+        if (achieved)
+            System.out.println("TreasureGoal has been achieved");
     }
 
     @Override
     public void addSubject(MultipleSubject obj) {
         subjects.add(obj);
+        System.out.println("Object added: " + obj.getClass());
     }
 
     @Override
     public void removeSubject(MultipleSubject obj) {
-        if (subjects.contains(obj)) subjects.remove(obj);
+        if (subjects.contains(obj))
+            subjects.remove(obj);
     }
 }

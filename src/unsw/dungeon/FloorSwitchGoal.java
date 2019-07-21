@@ -8,22 +8,22 @@ public class FloorSwitchGoal extends DungeonGoals implements MultipleObserver {
     private boolean achieved;
     private ArrayList<MultipleSubject> subjects;
 
-    public FloorSwitchGoal (String name){
+    public FloorSwitchGoal(String name) {
         // name should be either "AND" or "OR" for MultipleGoals
         this.name = name;
         this.achieved = false;
         this.subjects = new ArrayList<MultipleSubject>();
     }
-    
-    public void add (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
-	}
-    
-    public void remove (DungeonGoals goal) {
-		throw new UnsupportedOperationException();
+
+    public void add(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
     }
-    
-    public boolean achieved () {
+
+    public void remove(DungeonGoals goal) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean achieved() {
         return achieved;
     }
 
@@ -31,11 +31,13 @@ public class FloorSwitchGoal extends DungeonGoals implements MultipleObserver {
     public void update(MultipleSubject obj) {
         // System.out.println("Called");
         boolean done = true;
-        for (MultipleSubject fs : subjects){
-            if (!((FloorSwitch) fs).showState()) done = false;
+        for (MultipleSubject fs : subjects) {
+            if (!((FloorSwitch) fs).showState())
+                done = false;
         }
         achieved = done;
-        if (achieved) System.out.println("FloorSwitchGoal has been achieved");
+        if (achieved)
+            System.out.println("FloorSwitchGoal has been achieved");
     }
 
     @Override
@@ -46,6 +48,7 @@ public class FloorSwitchGoal extends DungeonGoals implements MultipleObserver {
 
     @Override
     public void removeSubject(MultipleSubject obj) {
-        if (subjects.contains(obj)) subjects.remove(obj);
+        if (subjects.contains(obj))
+            subjects.remove(obj);
     }
 }

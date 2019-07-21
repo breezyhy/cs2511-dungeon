@@ -11,7 +11,7 @@ public class FloorSwitch extends EntityNonblocking implements Observer, Multiple
     }
 
     @Override
-    public void update(Subject obj){
+    public void update(Subject obj) {
         Boulder boulder = (Boulder) obj;
         if (boulder.getX() == getX() && boulder.getY() == getY()) {
             switchState();
@@ -19,17 +19,17 @@ public class FloorSwitch extends EntityNonblocking implements Observer, Multiple
         }
         if (boulder.getPrevX() == getX() && boulder.getPrevY() == getY()) {
             switchState();
-            //m System.out.println(state());
+            // m System.out.println(state());
         }
 
     }
 
-    private void switchState () {
+    private void switchState() {
         state.trigger(this);
         notifyObservers();
     }
 
-    public void setState (FloorSwitchState state) {
+    public void setState(FloorSwitchState state) {
         this.state = state;
     }
 
@@ -54,6 +54,7 @@ public class FloorSwitch extends EntityNonblocking implements Observer, Multiple
 
     @Override
     public void notifyObservers() {
-        if (floorSwitchObserver != null) floorSwitchObserver.update(this);
+        if (floorSwitchObserver != null)
+            floorSwitchObserver.update(this);
     }
 }

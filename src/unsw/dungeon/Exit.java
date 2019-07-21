@@ -11,7 +11,8 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
 
     @Override
     public void update(Subject obj) {
-        if (!(obj instanceof Player)) return;
+        if (!(obj instanceof Player))
+            return;
         Player player = (Player) obj;
         if (player.getX() == getX() && player.getY() == getY()) {
             playerExit = true;
@@ -22,7 +23,7 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
         }
     }
 
-    public boolean getStatus(){
+    public boolean getStatus() {
         return playerExit;
     }
 
@@ -41,7 +42,8 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
 
     @Override
     public void notifyObservers() {
-        if (exitObserver != null) exitObserver.update(this);
+        if (exitObserver != null)
+            exitObserver.update(this);
     }
 
     // TODO

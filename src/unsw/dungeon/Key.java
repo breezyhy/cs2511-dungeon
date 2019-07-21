@@ -7,8 +7,9 @@ public class Key extends EntityConsumable {
     }
 
     @Override
-    public boolean resolveCollision(EntityMoveable obj){
-        if (!(obj instanceof Player)) return true;
+    public boolean resolveCollision(EntityMoveable obj) {
+        if (!(obj instanceof Player))
+            return true;
 
         Backpack backpack = ((Player) obj).getBackpack();
         if (backpack.getConsumable(this)) {
@@ -18,8 +19,10 @@ public class Key extends EntityConsumable {
         return true;
     }
 
-    public void useKey(){
+    public void useKey() {
+        if (getBackpack() == null)
+            return;
         disappear(getBackpack().getStoringColumn() + 1, 0);
-        used(getBackpack());
+        used();
     }
 }

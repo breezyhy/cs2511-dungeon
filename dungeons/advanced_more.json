@@ -1,0 +1,69 @@
+{
+    "width": 20,
+    "height": 20,
+    "entities": [
+        {
+            "x": 1,
+            "y": 1,
+            "type": "player"
+        },
+        {
+            "x": 18,
+            "y": 18,
+            "type": "exit"
+        },
+        {
+            "x": 5,
+            "y": 7,
+            "type": "key"
+        },
+        {
+            "x": 16,
+            "y": 4,
+            "type": "key"
+        },
+        {
+            "x": 15,
+            "y": 18,
+            "type": "door"
+        },
+        {
+            "x": 14,
+            "y": 13,
+            "type": "door"
+        },
+        {
+            "x": 8,
+            "y": 13,
+            "type": "enemy"
+        }
+
+    ],
+    "goal-condition": {
+        "goal": "OR",
+        "subgoals": [
+            {
+                "goal": "AND",
+                "subgoals": [
+                    {
+                        "goal": "enemies"
+                    },
+                    {
+                        "goal": "treasure"
+                    }
+                ]
+            },
+            {
+                "goal": "AND",
+                "subgoals": [
+                    {
+                        "goal": "exit"
+                    },
+                    {
+                        "goal": "boulders"
+                    }
+                ]
+            }
+        ]
+    }
+}
