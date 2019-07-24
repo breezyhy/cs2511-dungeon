@@ -92,9 +92,10 @@ public class Backpack {
     public boolean useConsumable(Door d) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Key) {
-                d.switchState();
-                ((Key) e).useKey();
-                return true;
+                // d.switchState();
+                Key k = (Key) e;
+                if (k.useKey(d)) return true;
+                return false;
             }
         }
 

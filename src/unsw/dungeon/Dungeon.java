@@ -73,7 +73,7 @@ public class Dungeon {
     public List<Entity> getSurroundingEntity(int x, int y) {
         List<Entity> collide = new ArrayList<>();
         for (Entity entity : entities) {
-        	if (entity == null) continue;
+            if (entity == null) continue;
             if (entity.getX() == (x + 1) && entity.getY() == y) {
                 collide.add(entity);
             }

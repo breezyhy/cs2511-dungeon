@@ -2,8 +2,11 @@ package unsw.dungeon;
 
 public class Key extends EntityConsumable {
 
-    public Key(int x, int y) {
+    private int id;
+
+    public Key(int x, int y, int id) {
         super(x, y);
+        this.id = id;
     }
 
     @Override
@@ -19,10 +22,15 @@ public class Key extends EntityConsumable {
         return true;
     }
 
-    public void useKey() {
+    public boolean useKey(Door d) {
         if (getBackpack() == null)
-            return;
-        disappear(getBackpack().getStoringColumn() + 1, 0);
-        used();
+            return false;
+        if (d.getId() == this.id) {
+            disappear(getBackpack().getStoringColumn() + 1, 0);
+            used();
+            d.switchState();
+            return true;
+        }
+        return false;
     }
 }

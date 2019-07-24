@@ -85,14 +85,20 @@ public abstract class DungeonLoader {
             entity = boulder;
             break;
         case "key":
-            Key key = new Key(x, y);
+            System.out.println("Creating object key");
+            int idK = json.getInt("id");
+            Key key = new Key(x, y, idK);
             onLoad(key);
             entity = key;
+            System.out.println("Created object key");
             break;
         case "door":
-            Door door = new Door(x, y);
+            System.out.println("Creating object door");
+            int idD = json.getInt("id");
+            Door door = new Door(x, y, idD);
             onLoad(door);
             entity = door;
+            System.out.println("Created object door");
             break;
         case "sword":
             Sword sword = new Sword(x, y);

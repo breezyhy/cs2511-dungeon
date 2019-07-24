@@ -21,7 +21,7 @@ public class Treasure extends EntityConsumable implements MultipleSubject {
 
         Backpack backpack = ((Player) obj).getBackpack();
         if (backpack.getConsumable(this)) {
-        	this.collected = true;
+            this.collected = true;
             System.out.println("Item disappears");
             notifyObservers();
         }

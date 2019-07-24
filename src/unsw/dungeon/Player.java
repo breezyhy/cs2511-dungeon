@@ -106,7 +106,7 @@ public class Player extends EntityMoveable implements Subject {
     // If the calling function is a lit bomb, it won't do anything apart from either
     // killing the player or leaving the player alive
     public boolean resolveCollision(EntityBlocking e) {
-    	if (e instanceof Bomb_Lit){
+        if (e instanceof Bomb_Lit){
             die();
             return true;
         }
