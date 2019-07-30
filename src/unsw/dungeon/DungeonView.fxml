@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="main" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unsw.dungeon.DungeonFullController">
    <children>
       <GridPane fx:id="squares" layoutY="25.0" onKeyPressed="#handleKeyPress">
          <columnConstraints>
@@ -22,18 +22,12 @@
         <menus>
           <Menu mnemonicParsing="false" text="Options">
             <items>
-                  <MenuItem fx:id="restart" mnemonicParsing="false" text="Restart" />
-              <MenuItem fx:id="exit" mnemonicParsing="false" text="Exit" />
+                  <MenuItem fx:id="mainmenu" mnemonicParsing="false" onAction="#mainmenu" text="Main Menu" />
+                  <MenuItem fx:id="restart" mnemonicParsing="false" onAction="#restart" text="Restart Dungeon" />
+              <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exit" text="Exit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Choose Level">
-            <items>
-              <MenuItem fx:id="level1" mnemonicParsing="false" text="Level 1" />
-                  <MenuItem fx:id="level2" mnemonicParsing="false" text="Level 2" />
-                  <MenuItem fx:id="level3" mnemonicParsing="false" text="Level 3" />
-                  <MenuItem fx:id="level4" mnemonicParsing="false" text="Level 4" />
-            </items>
-          </Menu>
+          <Menu mnemonicParsing="false" text="Choose Level" />
         </menus>
       </MenuBar>
    </children>
