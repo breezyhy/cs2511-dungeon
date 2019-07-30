@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +22,22 @@ public class DungeonFullApplication extends Application {
         // In this case, there is no loader needed
         // The controller will load the dungeon as needed
         // Check Game Of Life controller as reference
-
+        List<String> dungeons = new ArrayList<>();
+        dungeons.add("maze.json");
+        dungeons.add("boulders.json");
+        dungeons.add("advanced.json");
+        dungeons.add("advanced_more.json");
+        
+        DungeonFullController controller = new DungeonFullController(dungeons);
+        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
+        
         loader.setController(controller);
+        System.out.println("almost there");
+        
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        root.requestFocus();
+
         primaryStage.setScene(scene);
         primaryStage.show();
 
