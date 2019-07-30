@@ -23,7 +23,7 @@ public class MultipleGoals extends DungeonGoals {
 
     public boolean achieved() {
         if (this.subgoals.size() == 0)
-            return false;
+            throw new UnsupportedOperationException();
 
         boolean achieved = true;
         if (name.equals("AND")) {
