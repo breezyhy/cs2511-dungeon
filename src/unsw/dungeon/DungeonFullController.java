@@ -65,10 +65,13 @@ public class DungeonFullController {
     		});
     		levelmenu.getItems().add(r);
     	}
+    	
+    	
 	}
     
     @FXML
     void handleKeyPress(KeyEvent event) {
+    	// System.out.println("keyevent " + event);
     	if (loadedDungeon == null) return;
     	
     	Player player = loadedDungeon.getPlayer();
@@ -147,6 +150,10 @@ public class DungeonFullController {
     private void clearDungeon() {
     	this.loadedDungeon = null;
     	squares.getChildren().clear();
+    }
+    
+    public GridPane getSquares() {
+    	return this.squares;
     }
 }
 
