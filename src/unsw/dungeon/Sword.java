@@ -27,8 +27,9 @@ public class Sword extends EntityConsumable {
             this.useCount--;
             return true;
         } else if (this.useCount == 1) {
+        	// setStorage(getBackpack().getStoringColumn() + 1, 0);
+        	used();
             this.useCount--;
-            disappear(getBackpack().getStoringColumn() + 1, 0);
             return true;
         }
 

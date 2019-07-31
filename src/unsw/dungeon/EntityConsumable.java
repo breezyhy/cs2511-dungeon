@@ -27,9 +27,14 @@ public abstract class EntityConsumable extends Entity {
         if (backpack == null)
             return;
         backpack.removeConsumables(this);
+        this.setVisibility(false);
     }
 
-    public void disappear(int x, int y) {
+    // Fix on clarity
+    // <<<<<< disappear
+    // >>>>>> setStorage
+    // Setstorage is now used only for setting the backpack, used() will handle the disappearance of the entity from the screen
+    public void setStorage(int x, int y) {
         // Implement a method to make this disappear
         x().set(x);
         y().set(y);

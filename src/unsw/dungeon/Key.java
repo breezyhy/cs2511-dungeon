@@ -26,7 +26,7 @@ public class Key extends EntityConsumable {
         if (getBackpack() == null)
             return false;
         if (d.getId() == this.id) {
-            disappear(getBackpack().getStoringColumn() + 1, 0);
+        	// setStorage(getBackpack().getStoringColumn() + 1, 0);
             used();
             d.switchState();
             return true;

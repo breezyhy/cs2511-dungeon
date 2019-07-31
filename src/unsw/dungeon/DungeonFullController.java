@@ -40,6 +40,7 @@ public class DungeonFullController {
 
     private List<String> dungeonPaths;
 	private Dungeon loadedDungeon = null;
+	private String loadedDungeonPath = null;
 	    
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
@@ -64,9 +65,7 @@ public class DungeonFullController {
 				}
     		});
     		levelmenu.getItems().add(r);
-    	}
-    	
-    	
+    	}	
 	}
     
     @FXML
@@ -103,8 +102,9 @@ public class DungeonFullController {
     }
 
     @FXML
-    void restart(ActionEvent event) {
-
+    void restart(ActionEvent event) throws FileNotFoundException {
+    	String pastDungeon = this.loadedDungeonPath;
+    	loadDungeon(pastDungeon);
     }
     
     @FXML
@@ -117,6 +117,7 @@ public class DungeonFullController {
     	System.out.println(pathname);
     	DungeonFullLoader dungeonLoader = new DungeonFullLoader(pathname);
     	this.loadedDungeon = dungeonLoader.load();
+    	this.loadedDungeonPath = pathname;
     	Dungeon dungeon = this.loadedDungeon;
     	List<ImageView> initialEntities = dungeonLoader.getEntities();
     	
@@ -149,6 +150,7 @@ public class DungeonFullController {
     
     private void clearDungeon() {
     	this.loadedDungeon = null;
+    	this.loadedDungeonPath = null;
     	squares.getChildren().clear();
     }
     

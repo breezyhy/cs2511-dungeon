@@ -38,7 +38,7 @@ public class Backpack {
             }
         }
         k.storeBackpack(this);
-        k.disappear(getStoringColumn(), itemSize);
+        k.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
@@ -50,7 +50,7 @@ public class Backpack {
             }
         }
         p.storeBackpack(this);
-        p.disappear(getStoringColumn(), itemSize);
+        p.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
@@ -62,14 +62,14 @@ public class Backpack {
             }
         }
         s.storeBackpack(this);
-        s.disappear(getStoringColumn(), itemSize);
+        s.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
     public boolean getConsumable(Treasure t) {
         t.storeBackpack(this);
-        t.disappear(getStoringColumn(), itemSize);
+        t.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
@@ -81,7 +81,7 @@ public class Backpack {
             }
         }
         b.storeBackpack(this);
-        b.disappear(getStoringColumn(), itemSize);
+        b.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }

@@ -162,6 +162,13 @@ public class DungeonFullLoader extends DungeonLoader {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
+        entity.visible().addListener(new ChangeListener<Boolean>() {
+        	@Override
+        	public void changed(ObservableValue<? extends Boolean> observable,
+        			Boolean oldValue, Boolean newValue) {
+        		node.setVisible(newValue.booleanValue());
+        	}
+        });
     }
 
   
