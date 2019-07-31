@@ -4,34 +4,49 @@ import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
+
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 public class DungeonFullController {
 
-    @FXML
-    private GridPane squares;
+	@FXML
+	private Pane pane;
 
-    @FXML
-    private MenuItem mainmenu;
+	@FXML
+	private GridPane squares;
 
-    @FXML
-    private MenuItem restart;
+	@FXML
+	private MenuBar menubar;
 
-    @FXML
-    private MenuItem exit;
+	@FXML
+	private MenuItem mainmenu;
 
-    @FXML
-    private Menu levelmenu;
+	@FXML
+	private MenuItem restart;
 
+	@FXML
+	private MenuItem exit;
 
+	@FXML
+	private Menu levelmenu;
+
+    List<String> dungeonPaths;
+	    
+	    
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
+    	this.dungeonPaths = dungeonPaths;
+    }
+    
+    
+    @FXML
+	public void initialize() {
     	System.out.println(levelmenu);
-    	levelmenu = new Menu("levelmenu");
     	for (int i = 0; i < dungeonPaths.size(); i++) {
     		String name = dungeonPaths.get(i);
     		String rname = name.replaceAll(".json$", "");
@@ -39,12 +54,6 @@ public class DungeonFullController {
     		MenuItem r = new MenuItem(rname);
     		levelmenu.getItems().add(r);
     	}
-    }
-    
-    
-    @FXML
-	public void initialize() {
-
 	}
     
     @FXML
