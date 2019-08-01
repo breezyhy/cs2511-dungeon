@@ -40,7 +40,8 @@ public class DungeonFullApplication extends Application {
         controller.getSquares().requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
-
+        
+        controller.setStage(primaryStage);
     }
 
     public static void main(String[] args) {

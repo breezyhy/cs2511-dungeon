@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class DungeonFullController {
 
@@ -41,6 +42,7 @@ public class DungeonFullController {
     private List<String> dungeonPaths;
 	private Dungeon loadedDungeon = null;
 	private String loadedDungeonPath = null;
+	private Stage stage = null;
 	    
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
@@ -98,20 +100,24 @@ public class DungeonFullController {
 
     @FXML
     void mainmenu(ActionEvent event) {
-
+    	clearDungeon();
     }
 
+    @FXML
+    void exitApp(ActionEvent event) {
+    	
+    }
+    
     @FXML
     void restart(ActionEvent event) throws FileNotFoundException {
     	String pastDungeon = this.loadedDungeonPath;
     	loadDungeon(pastDungeon);
     }
     
-    @FXML
-    void exitApp(ActionEvent event) {
-
+    private void initMainMenu() {
+    	
     }
-
+    
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
     	System.out.println(pathname);
@@ -143,19 +149,26 @@ public class DungeonFullController {
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
         
-        pane.setMinSize(dungeon.getWidth(), dungeon.getHeight());
-        pane.setMaxSize(dungeon.getWidth(), dungeon.getHeight());
-        pane.setPrefSize(dungeon.getWidth(), dungeon.getHeight());
+        this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
+        this.stage.setHeight((dungeon.getHeight() + 2) * 32);
+        
     }
     
     private void clearDungeon() {
     	this.loadedDungeon = null;
     	this.loadedDungeonPath = null;
     	squares.getChildren().clear();
+    	
+    	this.stage.setWidth(400 + 16);
+    	this.stage.setHeight(300 + 32 + 8);
     }
     
     public GridPane getSquares() {
     	return this.squares;
+    }
+    
+    public void setStage(Stage stage) {
+    	this.stage = stage;
     }
 }
 
