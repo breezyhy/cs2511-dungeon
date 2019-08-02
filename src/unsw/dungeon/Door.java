@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the door entity as specified, with a state and an id
+ */
 public class Door extends EntitySemiblocking {
 
     private DoorState accessible;
@@ -11,22 +13,41 @@ public class Door extends EntitySemiblocking {
         this.id = id;
     }
 
+    /**
+     * When interacted with, the door switches to its next state
+     */
     public void switchState() {
         accessible.trigger(this);
     }
-
+    /**
+   	 * Gives the id related to the door/key combo
+     * @return id
+     */
     public int getId(){
         return this.id;
     }
-
+    
+    /**
+     * Sets the state of the door as an object
+     * @param accessible is door state that it is changing to
+     */
     public void setState(DoorState accessible) {
         this.accessible = accessible;
     }
-
+    
+    /**
+     * @returnn true if door can be passed through
+     * @return false if door cannot be passed through
+     */
     public boolean accessible() {
         return accessible.showState();
     }
 
+    /**
+     * Resolves collision with a moveable object. 
+     * @return true if door is accesible and is a player, or if player has a key
+     * @return false otherwise
+     */
     @Override
     public boolean resolveCollision(EntityMoveable obj) {
         if (!(obj instanceof Player))

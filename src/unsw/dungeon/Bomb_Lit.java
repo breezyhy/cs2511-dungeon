@@ -2,6 +2,10 @@ package unsw.dungeon;
 
 import java.util.List;
 
+/**
+ * A class that implements the lit bomb entity described in spec
+ * Lasts 8 ticks of game movement and explodes, killing surrounding entities
+ */
 public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
 
     private int timeLeft = 8;
@@ -13,6 +17,9 @@ public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
         this.dungeon = dungeon;
     }
 
+    /**
+     * Once blown up, deals damage to all surrounding entities
+     */
     private void collideSurrounding() {
         List<Entity> colliding = dungeon.getSurroundingEntity(getX(), getY());
         System.out.println("Collide with items: " + String.valueOf(colliding.size()));
@@ -22,7 +29,10 @@ public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
             f.resolveCollision(this);
         }
     }
-
+    
+    /**
+     * Implement the update method from the subscriber list
+     */
     @Override
     public void trigger() {
         this.timeLeft--;

@@ -2,7 +2,9 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+ * A class that stores the items (consumable) that a player is able to pick up
+ */
 public class Backpack {
     private List<EntityConsumable> itemList;
     private Dungeon dungeon;
@@ -12,7 +14,7 @@ public class Backpack {
         this.itemList = new ArrayList<>();
         this.dungeon = dungeon;
     }
-
+    
     public void addConsumables(EntityConsumable i) {
         itemList.add(i);
     }
@@ -27,10 +29,13 @@ public class Backpack {
     public int getStoringColumn() {
         return this.dungeon.getWidth();
     }
-
-    // This function gets called by player in EntityConsumable collision
-    // Returns false if it doesn't get backpacked (because of restrictions)
-    // Returns true and the consumable will be backpacked by the backpack
+    
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Key k) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Key) {
@@ -43,6 +48,12 @@ public class Backpack {
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Potion p) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Potion) {
@@ -55,6 +66,12 @@ public class Backpack {
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Sword s) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Sword) {
@@ -67,6 +84,12 @@ public class Backpack {
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Treasure t) {
         t.storeBackpack(this);
         t.setStorage(getStoringColumn(), itemSize);
@@ -74,6 +97,12 @@ public class Backpack {
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Bomb_Unlit b) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Bomb_Unlit) {
@@ -86,9 +115,11 @@ public class Backpack {
         return true;
     }
 
-    // If used, the item will be detached from itemlist, and returns true to any
-    // interface it's facing
-    // Also possibly switching others state
+    /**
+     * If player has a key, uses the key on the door
+     * @return true if key can be used on door and door unlocks
+     * @return false if player has no key
+     */
     public boolean useConsumable(Door d) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Key) {
@@ -102,12 +133,13 @@ public class Backpack {
         return false;
     }
 
-    // Order of precedence:
-    // 1. Resolve enemy with current consumable and tickrate
-    // 2. Resolve bomb damage with current consumable and tickrate
-    // 3. Resolve the consumable storing method
-
-    // True means that the player are immune/has the required consumable
+    /**
+     * Using a consumable on an enemy follows an order of precedence
+     * 1. Resolve enemy with current consumable and tickrate
+     * 2. Resolve bomb damage with current consumable and tickrate
+     * 3. Resolve the consumable storing method
+     * @return true if player is immune/has required consumable
+     */
     public boolean useConsumable(Enemy e) {
         for (EntityConsumable p : itemList) {
             if (p instanceof Potion) {
@@ -125,7 +157,10 @@ public class Backpack {
         return false;
     }
 
-    // Takes x and y as current coordinate
+    /**
+     * Places a lit bomb in the dungeon
+     * @return lit_bomb in the dungeon
+     */
     public Bomb_Lit useBomb(int x, int y) {
         Bomb_Lit bomb = new Bomb_Lit(dungeon, x, y);
         // TODO instantiate new bomb inside the dungeon
