@@ -224,16 +224,58 @@ public class DungeonFullController {
 		loadedDungeon.setTickListener();
 		
 		// Load image to the squares and add visibility listener (position listener is not needed since the bomb won't move)
-		Image bombimg = new Image("/bomb_lit_2.png");
-		ImageView display = new ImageView(bombimg);
+		Image bomb1 = new Image("/bomb_1.png");
+		Image bomb2 = new Image("/bomb_2.png");
+		Image bomb3 = new Image("/bomb_3.png");
+		Image bomb4 = new Image("/bomb_4.png");
+		Image bomb5 = new Image("/bomb_5.png");
+		Image bomb6 = new Image("/bomb_6.png");
+		Image bomb7 = new Image("/bomb_7.png");
+		Image bomb8 = new Image("/bomb_8.png");
+		Image bomb9 = new Image("/bomb_9.png");
+		Image bomb10 = new Image("/bomb_10.png");
+		ImageView display = new ImageView(bomb1);
 		squares.add(display, x, y);
 		
-		bomb.visible().addListener(new ChangeListener<Boolean>() {
-        	@Override
-        	public void changed(ObservableValue<? extends Boolean> observable,
-        			Boolean oldValue, Boolean newValue) {
-        		display.setVisible(newValue.booleanValue());
-        	}
+		bomb.timeLeft().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+            	switch (newValue.intValue()) {
+            	case 7:
+            		display.setImage(bomb2);
+            		break;
+            	case 6:
+            		display.setImage(bomb3);
+            		break;
+            	case 5:
+            		display.setImage(bomb4);
+            		break;
+            	case 4:
+            		display.setImage(bomb5);
+            		break;
+            	case 3:
+            		display.setImage(bomb6);
+            		break;
+            	case 2:
+            		display.setImage(bomb7);
+            		break;
+            	case 1:
+            		display.setImage(bomb8);
+            		break;
+            	case 0:
+            		display.setImage(bomb9);
+            		break;
+            	case -1:
+            		display.setImage(bomb10);
+            		break;
+            	case -2:
+            		display.setImage(null);
+            		break;
+            	default:
+            		break;
+            	}
+            }
         });
     }
 }

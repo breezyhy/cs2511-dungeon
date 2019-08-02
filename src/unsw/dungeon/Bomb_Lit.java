@@ -2,21 +2,36 @@ package unsw.dungeon;
 
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * A class that implements the lit bomb entity described in spec
  * Lasts 8 ticks of game movement and explodes, killing surrounding entities
  */
 public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
 
-    private int timeLeft = 8;
+    private IntegerProperty timeLeft;
     private Dungeon dungeon;
 
     public Bomb_Lit(Dungeon dungeon, int x, int y) {
         super(x, y);
-        this.timeLeft = 8;
+        this.timeLeft = new SimpleIntegerProperty(8);
         this.dungeon = dungeon;
     }
 
+    public IntegerProperty timeLeft() {
+    	return this.timeLeft;
+    }
+    
+    public int getTimeLeft() {
+    	return this.timeLeft.get();
+    }
+    
+    public void setTimeLeft(int x) {
+    	this.timeLeft.set(x);
+    }
+    
     /**
      * Once blown up, deals damage to all surrounding entities
      */
@@ -35,12 +50,13 @@ public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
      */
     @Override
     public void trigger() {
-        this.timeLeft--;
-        if (this.timeLeft == 0) {
+    	// Visibility is controlled by the controller
+    	int time = getTimeLeft();
+    	time--;
+        setTimeLeft(time);
+        if (time == 0) {
             collideSurrounding();
-            this.setVisibility(false);
             dungeon.removeEntity(this);
-            // Insert a method to make this disappear
         }
     }
 
