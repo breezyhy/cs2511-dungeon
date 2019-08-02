@@ -93,7 +93,7 @@ public class DungeonFullLoader extends DungeonLoader {
     public void onLoad(Door door){
         ImageView view = new ImageView(doorImage);
         addEntity(door, view);
-        trackState(door);
+        trackState(door, view);
     }
 
     @Override
@@ -173,8 +173,15 @@ public class DungeonFullLoader extends DungeonLoader {
     }
     
     // Track door state, whether it's been unlocked
-    private void trackState(Door door) {
-    	
+    private void trackState(Door door, ImageView node) {
+    	door.accessibleProperty().addListener(new ChangeListener<Boolean>() {
+        	@Override
+        	public void changed(ObservableValue<? extends Boolean> observable,
+        			Boolean oldValue, Boolean newValue) {
+        		Image openDoor = new Image("/open_door.png");
+        		node.setImage(openDoor);
+        	}
+        });
     }
 
   

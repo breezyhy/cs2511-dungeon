@@ -1,15 +1,21 @@
 package unsw.dungeon;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  * Implements the door entity as specified, with a state and an id
  */
 public class Door extends EntitySemiblocking {
 
     private DoorState accessible;
+    private BooleanProperty accessibleProperty;
     private int id;
 
     public Door(int x, int y, int id) {
         super(x, y);
         this.accessible = new Door_Locked();
+        this.accessibleProperty = new SimpleBooleanProperty(accessible.showState());
         this.id = id;
     }
 
@@ -18,6 +24,7 @@ public class Door extends EntitySemiblocking {
      */
     public void switchState() {
         accessible.trigger(this);
+        accessibleProperty.set(accessible());
     }
     /**
    	 * Gives the id related to the door/key combo
@@ -42,6 +49,10 @@ public class Door extends EntitySemiblocking {
     public boolean accessible() {
         return accessible.showState();
     }
+    
+    public BooleanProperty accessibleProperty() {
+    	return this.accessibleProperty;
+    }
 
     /**
      * Resolves collision with a moveable object. 
@@ -50,13 +61,15 @@ public class Door extends EntitySemiblocking {
      */
     @Override
     public boolean resolveCollision(EntityMoveable obj) {
+    	System.out.println(accessible());
+    	
         if (!(obj instanceof Player))
             return false;
         if (accessible())
             return true;
         Player player = (Player) obj;
         if (player.resolveCollision(this)) {
-            // switchState();
+            switchState();
             return true;
         }
         return false;

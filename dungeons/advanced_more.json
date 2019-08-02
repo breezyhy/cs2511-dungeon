@@ -613,6 +613,18 @@
         "y": 14,
         "type": "door",
         "id": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "type": "key",
+        "id": 0
+      },
+      {
+        "x": 5,
+        "y": 14,
+        "type": "door",
+        "id": 1
       }
     ],
     "goal-condition": {
