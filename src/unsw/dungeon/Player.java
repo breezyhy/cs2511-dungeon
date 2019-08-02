@@ -40,6 +40,7 @@ public class Player extends EntityMoveable implements Subject {
         }
         notifyObservers();
     }
+    
     /**
      * Move player diwn one square, checking to make sure space is available and 
      * notifying all subscribers
@@ -54,6 +55,7 @@ public class Player extends EntityMoveable implements Subject {
         }
         notifyObservers();
     }
+    
     /**
      * Move player left one square, checking to make sure space is available and 
      * notifying all subscribers
@@ -68,6 +70,7 @@ public class Player extends EntityMoveable implements Subject {
         }
         notifyObservers();
     }
+    
     /**
      * Move player right one square, checking to make sure space is available and 
      * notifying all subscribers
@@ -83,6 +86,10 @@ public class Player extends EntityMoveable implements Subject {
         notifyObservers();
     }
 
+    public boolean dropBomb() {
+    	return backpack.useBomb();
+    }
+    
     /**
      * 
      * @param x the x position of the entity player collides with

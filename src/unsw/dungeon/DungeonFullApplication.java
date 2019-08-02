@@ -40,15 +40,14 @@ public class DungeonFullApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         
         loader.setController(controller);
-        System.out.println("almost there");
         
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        controller.getSquares().requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
         
         controller.setStage(primaryStage);
+
     }
 
     public static void main(String[] args) {

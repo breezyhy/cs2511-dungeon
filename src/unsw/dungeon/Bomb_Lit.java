@@ -38,6 +38,8 @@ public class Bomb_Lit extends EntityBlocking implements GameTickSubscriber {
         this.timeLeft--;
         if (this.timeLeft == 0) {
             collideSurrounding();
+            this.setVisibility(false);
+            dungeon.removeEntity(this);
             // Insert a method to make this disappear
         }
     }

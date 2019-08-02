@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -47,12 +49,16 @@ public class DungeonFullController {
 	@FXML
 	private Pane mainpane;
 
-    
+	// Internals
+	private Stage stage = null;
+	
+	// Others
     private List<String> dungeonPaths;
 	private Dungeon loadedDungeon = null;
 	private String loadedDungeonPath = null;
-	private Stage stage = null;
 	private ChoiceBox<String> choicebox = null;
+	
+	
 	
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
@@ -116,6 +122,9 @@ public class DungeonFullController {
             // Get to the next level
         case B:
         	// Drop the bomb
+        	if(player.dropBomb()) {
+        		dropBomb(player);
+        	}
         default:
             break;
         }
@@ -184,6 +193,7 @@ public class DungeonFullController {
         this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
         this.stage.setHeight((dungeon.getHeight() + 2) * 32);
         
+        squares.requestFocus();
     }
     
     private void clearDungeon() {
@@ -192,7 +202,7 @@ public class DungeonFullController {
     	squares.getChildren().clear();
     	
     	this.stage.setWidth(400 + 16);
-    	this.stage.setHeight(300 + 32 + 8);
+    	this.stage.setHeight(300 + 32 + 7);
     }
     
     public GridPane getSquares() {
@@ -201,6 +211,30 @@ public class DungeonFullController {
     
     public void setStage(Stage stage) {
     	this.stage = stage;
+    }
+
+    private void dropBomb(Player player) {
+    	int x = player.getX();
+    	int y = player.getY();
+    	
+    	// Instantiate bomb_lit object, and add to the dungeon with attaching to the ticklistener
+    	Bomb_Lit bomb = new Bomb_Lit(loadedDungeon, x, y);
+    	
+		loadedDungeon.addEntity(bomb);
+		loadedDungeon.setTickListener();
+		
+		// Load image to the squares and add visibility listener (position listener is not needed since the bomb won't move)
+		Image bombimg = new Image("/bomb_lit_2.png");
+		ImageView display = new ImageView(bombimg);
+		squares.add(display, x, y);
+		
+		bomb.visible().addListener(new ChangeListener<Boolean>() {
+        	@Override
+        	public void changed(ObservableValue<? extends Boolean> observable,
+        			Boolean oldValue, Boolean newValue) {
+        		display.setVisible(newValue.booleanValue());
+        	}
+        });
     }
 }
 

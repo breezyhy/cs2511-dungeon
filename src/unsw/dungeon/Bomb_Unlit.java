@@ -22,5 +22,12 @@ public class Bomb_Unlit extends EntityConsumable {
 
         return true;
     }
+    
+    /**
+     * Use the bomb inside the backpack and also remove itself from the backpack
+     */
+    public void useBomb() {
+        used();
+    }
 
 }

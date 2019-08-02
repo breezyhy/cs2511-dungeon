@@ -51,6 +51,10 @@ public class Dungeon {
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
+    
+    public void removeEntity(Entity entity) {
+    	entities.remove(entity);
+    }
 
     public void setGoal(DungeonGoals goals) {
         this.goals = goals;
@@ -90,6 +94,10 @@ public class Dungeon {
         return collide;
     }
 
+    public void setTickListener() {
+    	this.gametick.attachTickListener(this);
+    }
+    
     public ArrayList<GameTickSubscriber> getTickListener() {
         ArrayList<GameTickSubscriber> listener = new ArrayList<>();
         for (Entity e : entities) {

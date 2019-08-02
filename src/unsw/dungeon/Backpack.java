@@ -158,13 +158,18 @@ public class Backpack {
     }
 
     /**
-     * Places a lit bomb in the dungeon
-     * @return lit_bomb in the dungeon
+     * Places a lit bomb in the dungeon.
+     * @return 
      */
-    public Bomb_Lit useBomb(int x, int y) {
-        Bomb_Lit bomb = new Bomb_Lit(dungeon, x, y);
-        // TODO instantiate new bomb inside the dungeon
-        return bomb;
+    public boolean useBomb() {
+    	for (EntityConsumable b : itemList) {
+    		if (b instanceof Bomb_Unlit) {
+    			((Bomb_Unlit) b).useBomb();
+    			return true;
+    		}
+    	}
+    	
+        return false;
     }
 
 }
