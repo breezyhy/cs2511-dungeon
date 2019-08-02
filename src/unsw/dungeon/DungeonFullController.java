@@ -3,9 +3,10 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -14,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class DungeonFullController {
@@ -39,11 +41,19 @@ public class DungeonFullController {
 	@FXML
 	private Menu levelmenu;
 
+    @FXML
+    private Pane textpane;
+    
+	@FXML
+	private Pane mainpane;
+
+    
     private List<String> dungeonPaths;
 	private Dungeon loadedDungeon = null;
 	private String loadedDungeonPath = null;
 	private Stage stage = null;
-	    
+	private ChoiceBox<String> choicebox = null;
+	
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
     	this.dungeonPaths = dungeonPaths;
@@ -52,11 +62,19 @@ public class DungeonFullController {
     
     @FXML
 	public void initialize() {
-    	System.out.println(levelmenu);
+    	// System.out.println(levelmenu);
+    	
+    	textpane.getChildren().add(new Text("Select dungeon"));
+    	
+    	choicebox = new ChoiceBox<String>();
+    	mainpane.getChildren().add(choicebox);
+    	
     	for (int i = 0; i < dungeonPaths.size(); i++) {
+    		
+    		// Set up the levelmenu
     		String name = dungeonPaths.get(i);
     		String rname = name.replaceAll(".json$", "");
-    		System.out.println("here " + rname);
+    		// System.out.println("here " + rname);
     		MenuItem r = new MenuItem(rname);
     		r.setOnAction((event) -> {
     			// Load the dungeon with the specified name
@@ -67,7 +85,10 @@ public class DungeonFullController {
 				}
     		});
     		levelmenu.getItems().add(r);
-    	}	
+    		
+    		// Set up the choicebox
+    		choicebox.getItems().add(i, rname);
+    	}
 	}
     
     @FXML
@@ -93,6 +114,8 @@ public class DungeonFullController {
             // Restart the game
         case N:
             // Get to the next level
+        case B:
+        	// Drop the bomb
         default:
             break;
         }
@@ -105,22 +128,31 @@ public class DungeonFullController {
 
     @FXML
     void exitApp(ActionEvent event) {
-    	
+    	Platform.exit();
+    	System.exit(0);
+    }
+    
+    @FXML
+    void launchDungeon(ActionEvent event) {
+    	int index = choicebox.getSelectionModel().getSelectedIndex();
+    	try {
+			loadDungeon(dungeonPaths.get(index));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
     }
     
     @FXML
     void restart(ActionEvent event) throws FileNotFoundException {
     	String pastDungeon = this.loadedDungeonPath;
+    	if (pastDungeon == null) return;
     	loadDungeon(pastDungeon);
     }
     
-    private void initMainMenu() {
-    	
-    }
-    
+
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
-    	System.out.println(pathname);
+    	// System.out.println(pathname);
     	DungeonFullLoader dungeonLoader = new DungeonFullLoader(pathname);
     	this.loadedDungeon = dungeonLoader.load();
     	this.loadedDungeonPath = pathname;
