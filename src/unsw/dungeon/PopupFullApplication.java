@@ -12,9 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class FullApplicationPopup {
+public class PopupFullApplication {
 
-	public FullApplicationPopup(Stage stage, String string) throws IOException {
+	public PopupFullApplication(Stage stage, String string) throws IOException {
     	final Stage popup = new Stage();
     	popup.initOwner(stage);
     	

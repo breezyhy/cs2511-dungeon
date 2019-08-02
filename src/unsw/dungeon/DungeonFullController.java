@@ -103,7 +103,7 @@ public class DungeonFullController {
     	levelmenu.getItems().add(x);
     	x.setOnAction((event) -> {
     		try {
-				new FullApplicationPopup(this.stage, "Thanks Obama");
+				new PopupFullApplication(this.stage, "Thanks Obama");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
