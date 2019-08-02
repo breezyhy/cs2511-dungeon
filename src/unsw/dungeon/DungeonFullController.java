@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -95,6 +96,18 @@ public class DungeonFullController {
     		// Set up the choicebox
     		choicebox.getItems().add(i, rname);
     	}
+
+    	
+    	// Code below is a dummy example on how to make a popup with the text "you died"
+    	MenuItem x = new MenuItem("popup");
+    	levelmenu.getItems().add(x);
+    	x.setOnAction((event) -> {
+    		try {
+				new FullApplicationPopup(this.stage, "Thanks Obama");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	});
 	}
     
     @FXML
@@ -144,6 +157,9 @@ public class DungeonFullController {
     @FXML
     void launchDungeon(ActionEvent event) {
     	int index = choicebox.getSelectionModel().getSelectedIndex();
+    	
+    	// Avoiding error on unselected option
+    	if (index == -1 || index >= dungeonPaths.size()) return;
     	try {
 			loadDungeon(dungeonPaths.get(index));
 		} catch (FileNotFoundException e) {
@@ -278,5 +294,7 @@ public class DungeonFullController {
             }
         });
     }
+    
+    
 }
 

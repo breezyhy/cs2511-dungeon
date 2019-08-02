@@ -93,6 +93,7 @@ public class DungeonFullLoader extends DungeonLoader {
     public void onLoad(Door door){
         ImageView view = new ImageView(doorImage);
         addEntity(door, view);
+        trackState(door);
     }
 
     @Override
@@ -126,7 +127,7 @@ public class DungeonFullLoader extends DungeonLoader {
     }
 
     private void addEntity(Entity entity, ImageView view) {
-        trackPosition(entity, view);
+    	trackPositionVisibility(entity, view);
         entities.add(view);
     }
 
@@ -145,7 +146,7 @@ public class DungeonFullLoader extends DungeonLoader {
      * @param entity
      * @param node
      */
-    private void trackPosition(Entity entity, Node node) {
+    private void trackPositionVisibility(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
         entity.x().addListener(new ChangeListener<Number>() {
@@ -169,6 +170,11 @@ public class DungeonFullLoader extends DungeonLoader {
         		node.setVisible(newValue.booleanValue());
         	}
         });
+    }
+    
+    // Track door state, whether it's been unlocked
+    private void trackState(Door door) {
+    	
     }
 
   
