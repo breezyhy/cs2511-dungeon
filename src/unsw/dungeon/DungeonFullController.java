@@ -127,6 +127,11 @@ public class DungeonFullController {
             break;
         case R:
             // Restart the game
+        	try {
+				restartDungeon();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
         case N:
             // Get to the next level
         case B:
@@ -172,11 +177,14 @@ public class DungeonFullController {
     
     @FXML
     void restart(ActionEvent event) throws FileNotFoundException {
+    	restartDungeon();
+    }
+    
+    private void restartDungeon() throws FileNotFoundException {
     	String pastDungeon = this.loadedDungeonPath;
     	if (pastDungeon == null) return;
     	loadDungeon(pastDungeon);
     }
-    
 
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
