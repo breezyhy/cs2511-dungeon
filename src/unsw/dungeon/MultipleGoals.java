@@ -9,15 +9,21 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class MultipleGoals extends DungeonGoals {
     private String name;
     private List<DungeonGoals> subgoals;
-
+    private BooleanProperty achieved;
+    
     public MultipleGoals(String name) {
         // name should be either "AND" or "OR" for MultipleGoals
         this.name = name;
         this.subgoals = new ArrayList<>();
+        this.achieved = new SimpleBooleanProperty(false);
     }
 
     public void add(DungeonGoals goal) {
         subgoals.add(goal);
+        goal.achieved().addListener((event) -> {
+        	// Call achieved on any change on subgoal
+        	achieved();
+        });
     }
 
     public void remove(DungeonGoals goal) {
@@ -29,22 +35,25 @@ public class MultipleGoals extends DungeonGoals {
     }
 
     public BooleanProperty achieved() {
-        BooleanProperty achieved = new SimpleBooleanProperty(false);
     	if (this.subgoals.size() == 0)
             return achieved;
-        achieved.set(true);
+    	
+    	boolean tempStatus = true;
+
         if (name.equals("AND")) {
             for (DungeonGoals a : subgoals) {
                 if (!a.achieved().get())
-                    achieved.set(false);
+                    tempStatus = false;
             }
         } else {
-            achieved.set(false);
+            tempStatus = false;
             for (DungeonGoals a : subgoals) {
                 if (a.achieved().get())
-                    achieved.set(true);
+                    tempStatus = true;
             }
         }
+        
+        achieved.set(tempStatus);
 
         return achieved;
     }
