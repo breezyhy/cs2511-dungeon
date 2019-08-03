@@ -15,6 +15,10 @@ public class Backpack {
         this.dungeon = dungeon;
     }
     
+    public List<EntityConsumable> getConsumableList(){
+    	return this.itemList;
+    }
+    
     public void addConsumables(EntityConsumable i) {
         itemList.add(i);
     }

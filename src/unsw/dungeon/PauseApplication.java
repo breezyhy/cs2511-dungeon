@@ -14,12 +14,12 @@ import javafx.stage.Stage;
 
 public class PauseApplication {
 
-	public PauseApplication(DungeonFullController main, String string) throws IOException {
+	public PauseApplication(DungeonFullController main) throws IOException {
     	final Stage pause = new Stage();
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("PauseMenu.fxml"));
     	
-    	PauseController controller = new PauseController(main, pause, string);
+    	PauseController controller = new PauseController(main, pause);
 
         loader.setController(controller);
         

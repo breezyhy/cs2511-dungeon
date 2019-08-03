@@ -132,6 +132,12 @@ public class DungeonFullController {
         		dropBomb(player);
         	}
         	break;
+        case ESCAPE:
+        	try {
+    			new PauseApplication(this);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
         default:
             break;
         }
@@ -349,6 +355,10 @@ public class DungeonFullController {
             	}
             }
         });
+    }
+    
+    public Dungeon getDungeon() {
+    	return this.loadedDungeon;
     }
     
     
