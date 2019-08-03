@@ -59,6 +59,7 @@ public class Dungeon {
     public void setGoal(DungeonGoals goals) {
         this.goals = goals;
     }
+    
 
     public DungeonGoals getGoal() {
         return this.goals;
