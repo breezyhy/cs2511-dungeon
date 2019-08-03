@@ -131,6 +131,7 @@ public class DungeonFullController {
         	if(player.dropBomb()) {
         		dropBomb(player);
         	}
+        	break;
         default:
             break;
         }
@@ -200,6 +201,7 @@ public class DungeonFullController {
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
         
+        //Show tooltip of progress in goals
         DungeonGoals goals = dungeon.getGoal();
         if(goals instanceof MultipleGoals) {
         	for(DungeonGoals g : ((MultipleGoals) goals).getGoals()) {
@@ -209,8 +211,7 @@ public class DungeonFullController {
         }else {
         	displayGoal(goals);
         }
-
-        
+                
         this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
         this.stage.setHeight((dungeon.getHeight() + 2) * 32 + 16);
         
@@ -257,6 +258,7 @@ public class DungeonFullController {
             this.squares.setFillWidth(l, true);
     	}
     }
+    
     
     private void popup(String string) {
     	try {

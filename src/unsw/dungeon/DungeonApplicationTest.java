@@ -265,15 +265,15 @@ class DungeonApplicationTest {
 		e.registerObserver(goal);
 		// Exit has to be attached to player as observer
 		q1.registerObserver(e);
-		assertTrue(!goal.achieved());
+		assertTrue(!goal.achieved().get());
 		q1.moveRight();
-		assertTrue(!goal.achieved());
-		q1.moveRight();
-		q1.moveRight();
-		assertTrue(goal.achieved());
+		assertTrue(!goal.achieved().get());
 		q1.moveRight();
 		q1.moveRight();
-		assertTrue(goal.achieved());
+		assertTrue(goal.achieved().get());
+		q1.moveRight();
+		q1.moveRight();
+		assertTrue(goal.achieved().get());
 	}
 	
 	@Test
