@@ -63,7 +63,7 @@ public class Door extends EntitySemiblocking {
     public boolean resolveCollision(EntityMoveable obj) {
     	System.out.println(accessible());
     	
-        if (!(obj instanceof Player))
+        if (!(obj instanceof Player) && !accessible())
             return false;
         if (accessible())
             return true;

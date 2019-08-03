@@ -3,6 +3,7 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -212,7 +213,7 @@ public class DungeonFullController {
 
         
         this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
-        this.stage.setHeight((dungeon.getHeight() + 2) * 32 + 16);
+        this.stage.setHeight((dungeon.getHeight() + 3) * 32);
         
         squares.requestFocus();
         
@@ -221,7 +222,16 @@ public class DungeonFullController {
         	@Override
         	public void changed(ObservableValue<? extends Boolean> observable,
         			Boolean oldValue, Boolean newValue) {
-        		popup("You died");
+        		popupOnDeath("You died");
+        	}
+        });
+        
+        DungeonGoals dGoal = loadedDungeon.getGoal();
+        dGoal.achieved().addListener(new ChangeListener<Boolean>() {
+        	@Override
+        	public void changed(ObservableValue<? extends Boolean> observable,
+        			Boolean oldValue, Boolean newValue) {
+        		popupOnFinish("You have completed your dungeon");
         	}
         });
     }
@@ -258,9 +268,17 @@ public class DungeonFullController {
     	}
     }
     
-    private void popup(String string) {
+    private void popupOnDeath(String string) {
     	try {
 			new PopupOnDeathApplication(this, string);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private void popupOnFinish(String string) {
+    	try {
+			new PopupOnFinishApplication(this, string);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -349,6 +367,12 @@ public class DungeonFullController {
         });
     }
     
-    
+    public void newRandomDungeon() throws FileNotFoundException {
+    	String pastDungeon = this.loadedDungeonPath;
+    	if (pastDungeon == null) return;
+    	
+    	Random rand = new Random();
+    	loadDungeon(dungeonPaths.get(rand.nextInt(dungeonPaths.size())));
+    }
 }
 
