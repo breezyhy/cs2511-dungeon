@@ -16,6 +16,7 @@ public class PauseApplication {
 
 	public PauseApplication(DungeonFullController main) throws IOException {
     	final Stage pause = new Stage();
+    	pause.setTitle("Game Paused");
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("PauseMenu.fxml"));
     	

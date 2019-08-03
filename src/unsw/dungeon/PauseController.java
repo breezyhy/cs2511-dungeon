@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -27,9 +28,6 @@ public class PauseController {
 	private Button restartButton;
 	
 	@FXML
-	private Button chooseButton;
-	
-	@FXML
 	private GridPane inventory;
 	
 	
@@ -48,17 +46,18 @@ public class PauseController {
 	
 	@FXML
 	void exitFun() {
-		
+		main.mainmenu(new ActionEvent());
+		currentStage.close();
 	}
 	
 	@FXML
 	void restart() {
-		
-	}
-	
-	@FXML
-	void choose() {
-		
+		try {
+			main.restart(new ActionEvent());
+			currentStage.close();
+		}catch(Exception e){
+			System.out.println("Could not restart: Error");
+		}
 	}
 	
 	@FXML
