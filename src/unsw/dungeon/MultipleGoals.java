@@ -20,6 +20,10 @@ public class MultipleGoals extends DungeonGoals {
     public void remove(DungeonGoals goal) {
         subgoals.add(goal);
     }
+    
+    public List<DungeonGoals> getGoals() {
+    	return this.subgoals;
+    }
 
     public boolean achieved() {
         if (this.subgoals.size() == 0)

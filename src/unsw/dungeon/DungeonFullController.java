@@ -5,14 +5,17 @@ import java.io.IOException;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -58,12 +61,14 @@ public class DungeonFullController {
 	private Dungeon loadedDungeon = null;
 	private String loadedDungeonPath = null;
 	private ChoiceBox<String> choicebox = null;
+	private int numGoals;
 	
 	
 	
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
     	this.dungeonPaths = dungeonPaths;
+    	this.numGoals = 0;
     }
     
     
@@ -185,6 +190,7 @@ public class DungeonFullController {
         }
         
         squares.add(new ImageView(backpack), dungeon.getWidth(), 0);
+        
 
         for (int y = 1; y < dungeon.getHeight(); y++) {
             int x = dungeon.getWidth();
@@ -194,8 +200,19 @@ public class DungeonFullController {
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
         
+        DungeonGoals goals = dungeon.getGoal();
+        if(goals instanceof MultipleGoals) {
+        	for(DungeonGoals g : ((MultipleGoals) goals).getGoals()) {
+        		displayGoal(g);
+        		this.numGoals += 2;
+        	}
+        }else {
+        	displayGoal(goals);
+        }
+
+        
         this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
-        this.stage.setHeight((dungeon.getHeight() + 2) * 32);
+        this.stage.setHeight((dungeon.getHeight() + 2) * 32 + 16);
         
         squares.requestFocus();
         
@@ -207,6 +224,38 @@ public class DungeonFullController {
         		popup("You died");
         	}
         });
+    }
+    
+    private void displayGoal(DungeonGoals g) {
+    	if(g instanceof TreasureGoal) {
+            Image treasure = new Image("/gold_pile.png");
+            Label l = new Label();
+            l.setMaxWidth(Double.MAX_VALUE);
+//            l.setMaxHeight(30);
+            l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
+            this.squares.add(new ImageView(treasure), this.numGoals, this.loadedDungeon.getHeight());
+            this.squares.add(l, this.numGoals + 1, this.loadedDungeon.getHeight());
+            this.squares.setFillWidth(l, true);
+
+    	}else if (g instanceof EnemiesGoal) {
+    		Image enemy = new Image("/deep_elf_master_archer.png");
+            Label l = new Label();
+            l.setMaxWidth(Double.MAX_VALUE);
+//            l.setMaxHeight(30);
+            l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
+            this.squares.add(new ImageView(enemy), this.numGoals, this.loadedDungeon.getHeight());
+            this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
+            this.squares.setFillWidth(l, true);
+    	}else if (g instanceof FloorSwitchGoal) {
+    		Image boulder = new Image("/boulder.png");
+            Label l = new Label();
+            l.setMaxWidth(Double.MAX_VALUE);
+//            l.setMaxHeight(30);
+            l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
+            this.squares.add(new ImageView(boulder), this.numGoals, this.loadedDungeon.getHeight());
+            this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
+            this.squares.setFillWidth(l, true);
+    	}
     }
     
     private void popup(String string) {
@@ -221,7 +270,7 @@ public class DungeonFullController {
     	this.loadedDungeon = null;
     	this.loadedDungeonPath = null;
     	squares.getChildren().clear();
-    	
+    	this.numGoals = 0;
     	this.stage.setWidth(400 + 16);
     	this.stage.setHeight(300 + 32 + 7);
     }
