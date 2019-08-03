@@ -63,6 +63,7 @@ public class DungeonFullController {
 	private String loadedDungeonPath = null;
 	private ChoiceBox<String> choicebox = null;
 	private int numGoals;
+	private boolean controllerOn;
 	
 	
 	
@@ -108,6 +109,7 @@ public class DungeonFullController {
     void handleKeyPress(KeyEvent event) {
     	// System.out.println("keyevent " + event);
     	if (loadedDungeon == null) return;
+    	if (controllerOn == false) return;
     	
     	Player player = loadedDungeon.getPlayer();
     	switch (event.getCode()) {
@@ -214,7 +216,7 @@ public class DungeonFullController {
         
         this.stage.setWidth((dungeon.getWidth() + 1) * 32 + 16);
         this.stage.setHeight((dungeon.getHeight() + 3) * 32);
-        
+        this.controllerOn = true;
         squares.requestFocus();
         
         Player player = dungeon.getPlayer();
@@ -232,6 +234,7 @@ public class DungeonFullController {
         	public void changed(ObservableValue<? extends Boolean> observable,
         			Boolean oldValue, Boolean newValue) {
         		popupOnFinish("You have completed your dungeon");
+        		disableController();
         	}
         });
     }
@@ -368,11 +371,14 @@ public class DungeonFullController {
     }
     
     public void newRandomDungeon() throws FileNotFoundException {
-    	String pastDungeon = this.loadedDungeonPath;
-    	if (pastDungeon == null) return;
-    	
     	Random rand = new Random();
-    	loadDungeon(dungeonPaths.get(rand.nextInt(dungeonPaths.size())));
+    	int random = rand.nextInt(dungeonPaths.size());
+    	System.out.println(random);
+    	loadDungeon(dungeonPaths.get(random));
+    }
+    
+    private void disableController() {
+    	this.controllerOn = false;
     }
 }
 

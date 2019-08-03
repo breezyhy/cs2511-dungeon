@@ -77,8 +77,8 @@ public class Boulder extends EntitySemiblocking implements Subject {
     @Override
     public boolean resolveCollision(EntityBlocking obj) {
         if (obj instanceof Bomb_Lit) {
-            x().set(dungeon.getWidth() + 1);
-            y().set(dungeon.getHeight() + 1);
+            dungeon.removeEntity(this);
+            setVisibility(false);
         }
 
         return true;
