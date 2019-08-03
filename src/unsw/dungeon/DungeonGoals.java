@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public abstract class DungeonGoals {
@@ -20,7 +21,7 @@ public abstract class DungeonGoals {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean achieved() {
+	public BooleanProperty achieved() {
 		throw new UnsupportedOperationException();
 	}
 

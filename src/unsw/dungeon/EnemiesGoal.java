@@ -1,13 +1,13 @@
 package unsw.dungeon;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
     private String name;
-    private boolean achieved;
+    private SimpleBooleanProperty achieved;
     private ArrayList<MultipleSubject> subjects;
     private SimpleIntegerProperty progress;
     private SimpleIntegerProperty total;
@@ -15,7 +15,7 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
     public EnemiesGoal(String name) {
         // name should be either "AND" or "OR" for MultipleGoals
         this.name = name;
-        this.achieved = false;
+        this.achieved = new SimpleBooleanProperty(false);
         this.progress = new SimpleIntegerProperty(0);
         this.subjects = new ArrayList<MultipleSubject>();
         this.total = new SimpleIntegerProperty(subjects.size());
@@ -32,6 +32,10 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
     	this.progress.set(p);
     }
     
+    public String getName() {
+    	return this.name;
+    }
+    
     public void add(DungeonGoals goal) {
         throw new UnsupportedOperationException();
     }
@@ -40,14 +44,14 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
         throw new UnsupportedOperationException();
     }
 
-    public boolean achieved() {
+    public SimpleBooleanProperty achieved() {
         return achieved;
     }
 
     @Override
     public void update(MultipleSubject obj) {
-        boolean done = true;
-        int count = 0;
+    	boolean done = true;
+    	int count = 0;
         for (MultipleSubject enemy : subjects) {
             if (((Enemy) enemy).alive())
                 done = false;
@@ -56,8 +60,8 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
             }
         }
         setProgress(count);
-        achieved = done;
-        if (achieved)
+        achieved.set(done);
+        if (achieved.get())
             System.out.println("EnemiesGoal has been achieved");
     }
 
