@@ -96,18 +96,6 @@ public class DungeonFullController {
     		// Set up the choicebox
     		choicebox.getItems().add(i, rname);
     	}
-
-    	
-    	// Code below is a dummy example on how to make a popup with the text "you died"
-    	MenuItem x = new MenuItem("popup");
-    	levelmenu.getItems().add(x);
-    	x.setOnAction((event) -> {
-    		try {
-				new PopupFullApplication(this.stage, "Thanks Obama");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-    	});
 	}
     
     @FXML
@@ -210,6 +198,23 @@ public class DungeonFullController {
         this.stage.setHeight((dungeon.getHeight() + 2) * 32);
         
         squares.requestFocus();
+        
+        Player player = dungeon.getPlayer();
+        player.aliveProperty().addListener(new ChangeListener<Boolean>() {
+        	@Override
+        	public void changed(ObservableValue<? extends Boolean> observable,
+        			Boolean oldValue, Boolean newValue) {
+        		popup("You died");
+        	}
+        });
+    }
+    
+    private void popup(String string) {
+    	try {
+			new PopupOnDeathApplication(this, string);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     private void clearDungeon() {

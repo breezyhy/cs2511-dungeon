@@ -12,15 +12,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PopupFullApplication {
+public class PopupOnDeathApplication {
 
-	public PopupFullApplication(Stage stage, String string) throws IOException {
+	public PopupOnDeathApplication(DungeonFullController main, String string) throws IOException {
     	final Stage popup = new Stage();
-    	popup.initOwner(stage);
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("PopupView.fxml"));
     	
-    	PopupController controller = new PopupController(popup, string);
+    	PopupOnDeathController controller = new PopupOnDeathController(main, popup, string);
 
         loader.setController(controller);
         

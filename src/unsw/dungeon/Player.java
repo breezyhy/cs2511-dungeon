@@ -3,6 +3,9 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  * The player entity
  * 
@@ -13,6 +16,7 @@ public class Player extends EntityMoveable implements Subject {
 
     private Backpack backpack;
     private ArrayList<Observer> playerObserver;
+    private BooleanProperty alive;
 
     /**
      * Create a player positioned in square (x,y)
@@ -24,6 +28,18 @@ public class Player extends EntityMoveable implements Subject {
         super(dungeon, x, y);
         this.backpack = new Backpack(dungeon);
         this.playerObserver = new ArrayList<>();
+        this.alive = new SimpleBooleanProperty(true);
+    }
+    
+    public void die() {
+    	this.setVisibility(false);
+    	dungeon().removeEntity(this);
+        setAlive(false);
+        alive.set(false);
+    }
+    
+    public BooleanProperty aliveProperty() {
+    	return this.alive;
     }
     
     /**

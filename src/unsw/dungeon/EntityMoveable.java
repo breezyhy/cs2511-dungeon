@@ -27,6 +27,10 @@ public abstract class EntityMoveable extends Entity {
     public boolean alive() {
         return this.alive;
     }
+    
+    public void setAlive(boolean alive) {
+    	this.alive = alive;
+    }
 
     public boolean resolveCollision(EntityConsumable obj) {
         return false;
