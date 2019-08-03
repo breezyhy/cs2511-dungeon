@@ -13,7 +13,6 @@
       <Button fx:id="continueButton" layoutX="34.0" layoutY="30.0" mnemonicParsing="false" onAction="#continueFun" prefHeight="26.0" prefWidth="105.0" text="Continue" />
       <Button fx:id="exitButton" layoutX="34.0" layoutY="97.0" mnemonicParsing="false" onAction="#exitFun" prefHeight="26.0" prefWidth="105.0" text="Exit" />
       <Button fx:id="restartButton" layoutX="34.0" layoutY="174.0" mnemonicParsing="false" onAction="#restart" prefHeight="26.0" prefWidth="105.0" text="Restart" />
-      <Button fx:id="chooseButton" layoutX="34.0" layoutY="240.0" mnemonicParsing="false" onAction="#choose" text="Choose Level" />
       <Label layoutX="250.0" layoutY="35.0" text="Inventory" />
       <GridPane fx:id="inventory" layoutX="181.0" layoutY="56.0">
         <columnConstraints>
