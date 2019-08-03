@@ -34,6 +34,10 @@ public class DungeonFullLoader extends DungeonLoader {
     private Image treasureImage;
     private Image potionImage;
     private Image enemyImage;
+    private Image pinkDoor;
+    private Image greyDoor;
+    private Image pinkKey;
+    private Image greyKey;
 
     public DungeonFullLoader(String filename)
             throws FileNotFoundException {
@@ -51,6 +55,10 @@ public class DungeonFullLoader extends DungeonLoader {
         treasureImage = new Image("/gold_pile.png");
         potionImage = new Image("/brilliant_blue_new.png");
         enemyImage = new Image("/deep_elf_master_archer.png");
+        pinkDoor = new Image("/pink_door.png");
+        greyDoor = new Image("/grey_door.png");
+        pinkKey = new Image("/pink_key.png");
+        greyKey = new Image("/grey_key.png");
     }
 
     @Override
@@ -85,13 +93,37 @@ public class DungeonFullLoader extends DungeonLoader {
 
     @Override
     public void onLoad(Key key){
-        ImageView view = new ImageView(keyImage);
+    	ImageView view = new ImageView(keyImage);
+    	switch(key.getID()) {
+    	case 0:
+            view = new ImageView(keyImage);
+            break;
+    	case 1:
+            view = new ImageView(greyKey);
+            break;
+    	case 2:
+            view = new ImageView(pinkKey);
+            break;
+
+    	}
         addEntity(key, view);
     }
 
     @Override
     public void onLoad(Door door){
-        ImageView view = new ImageView(doorImage);
+    	ImageView view = new ImageView(doorImage);
+    	switch(door.getId()) {
+    	case 0:
+            view = new ImageView(doorImage);
+            break;
+    	case 1:
+            view = new ImageView(greyDoor);
+            break;
+    	case 2:
+            view = new ImageView(pinkDoor);
+            break;
+
+    	}
         addEntity(door, view);
         trackState(door, view);
     }

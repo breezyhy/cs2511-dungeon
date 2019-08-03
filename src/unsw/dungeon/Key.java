@@ -21,6 +21,10 @@ public class Key extends EntityConsumable {
 
         return true;
     }
+    
+    public int getID() {
+    	return this.id;
+    }
 
     public boolean useKey(Door d) {
         if (getBackpack() == null)
