@@ -182,6 +182,18 @@ public class Backpack {
         return false;
     }
 
+    
+    public boolean useConsumableWitch(Witch e) {
+        for (EntityConsumable p : itemList) {
+            if (p instanceof Potion) {
+                if (((Potion) p).stillActive())
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    
     /**
      * Places a lit bomb in the dungeon.
      * @return 

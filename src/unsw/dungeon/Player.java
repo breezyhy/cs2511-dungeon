@@ -153,6 +153,14 @@ public class Player extends EntityMoveable implements Subject {
         return false;
     }
     
+    public boolean isImmuneWitch(Witch e) {
+        if (backpack.useConsumableWitch(e)) {
+            return true;
+        }
+        die();
+        return false;
+    }
+    
     /**
      * Called when player collides with a door, and key needs to be used
      * @param d Door that is being collided with

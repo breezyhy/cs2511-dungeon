@@ -125,6 +125,16 @@ public abstract class DungeonLoader {
             onLoad(enemy);
             entity = enemy;
             break;
+        case "hound":
+            Hound hound = new Hound(dungeon, x, y);
+            onLoad(hound);
+            entity = hound;
+            break;
+        case "witch":
+            Witch witch = new Witch(dungeon, x, y);
+            onLoad(witch);
+            entity = witch;
+            break;
         default:
             break;
         }
@@ -143,6 +153,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Treasure treasure);
     public abstract void onLoad(Potion potion);
     public abstract void onLoad(Enemy enemy);
+    public abstract void onLoad(Hound hound);
+    public abstract void onLoad(Witch witch);
 
     private DungeonGoals loadGoals(JSONObject jsongoals, Dungeon dungeon){
         String type = jsongoals.getString("goal");

@@ -38,6 +38,8 @@ public class DungeonFullLoader extends DungeonLoader {
     private Image greyDoor;
     private Image pinkKey;
     private Image greyKey;
+    private Image houndImage;
+    private Image witchImage;
 
     public DungeonFullLoader(String filename)
             throws FileNotFoundException {
@@ -59,6 +61,8 @@ public class DungeonFullLoader extends DungeonLoader {
         greyDoor = new Image("/grey_door.png");
         pinkKey = new Image("/pink_key.png");
         greyKey = new Image("/grey_key.png");
+        houndImage = new Image("/hound.png");
+        witchImage = new Image("/gnome.png");
     }
 
     @Override
@@ -89,6 +93,18 @@ public class DungeonFullLoader extends DungeonLoader {
     public void onLoad(Boulder boulder){
         ImageView view = new ImageView(boulderImage);
         addEntity(boulder, view);
+    }
+    
+    @Override
+    public void onLoad(Hound hound){
+        ImageView view = new ImageView(houndImage);
+        addEntity(hound, view);
+    }
+    
+    @Override
+    public void onLoad(Witch witch){
+        ImageView view = new ImageView(witchImage);
+        addEntity(witch, view);
     }
 
     @Override
