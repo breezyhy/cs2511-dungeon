@@ -163,11 +163,6 @@ public class DungeonFullLoader extends DungeonLoader {
         entities.add(view);
     }
 
-    // To override old entity image to new entity image, in case of any switching
-    private void overrideEntityImage (Entity entity, ImageView view){
-
-    }
-
     /**
      * Set a node in a GridPane to have its position track the position of an
      * entity in the dungeon.

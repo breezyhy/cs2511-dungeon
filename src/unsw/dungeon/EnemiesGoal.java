@@ -20,6 +20,7 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
         this.subjects = new ArrayList<MultipleSubject>();
         this.total = new SimpleIntegerProperty(subjects.size());
     }
+    
     public SimpleIntegerProperty getProgress() {
     	return this.progress;
     }

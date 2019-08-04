@@ -18,6 +18,9 @@ public class MultipleGoals extends DungeonGoals {
         this.achieved = new SimpleBooleanProperty(false);
     }
 
+    /**
+     * Add subgoal for this multiplegoals and attaching a listener for achieved state of the subgoal
+     */
     public void add(DungeonGoals goal) {
         subgoals.add(goal);
         goal.achieved().addListener((event) -> {
@@ -26,14 +29,25 @@ public class MultipleGoals extends DungeonGoals {
         });
     }
 
+    /**
+     * Remove subgoal for this multiplegoals
+     */
     public void remove(DungeonGoals goal) {
         subgoals.add(goal);
     }
     
+    /**
+     * Get subgoals of this multiplegoals
+     * @return subgoals (List<DungeonGoals>)
+     */
     public List<DungeonGoals> getGoals() {
     	return this.subgoals;
     }
 
+    /**
+     * Checks if the status of this multipleGoals is true/false and returns the booleanproperty of the achieved state
+     * @return BooleanProperty
+     */
     public BooleanProperty achieved() {
     	if (this.subgoals.size() == 0)
             return achieved;

@@ -65,12 +65,13 @@ public class DungeonFullController {
 	private int numGoals;
 	private boolean controllerOn;
 	
-	
-	
+	/**
+	 * Instantiate the controller of the application. Takes list of dungeon (json) filename
+	 * @param dungeonPaths (List<String>)
+	 */
     public DungeonFullController(List<String> dungeonPaths) {
     	// dungeonPaths will take all dungeons and make the required levels on the dungeon selector
     	this.dungeonPaths = dungeonPaths;
-    	this.numGoals = 0;
     }
     
     
@@ -132,8 +133,11 @@ public class DungeonFullController {
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			}
-        case N:
-            // Get to the next level
+        	break;
+        case D:
+        	// Drop the key
+        	player.dropKey();
+        	break;
         case B:
         	// Drop the bomb
         	if(player.dropBomb()) {
@@ -180,12 +184,25 @@ public class DungeonFullController {
     	restartDungeon();
     }
     
+    /**
+     * Restart the current dungeon by calling the loadDungeon 
+     * with the currently running dungeon as the path 
+     * @throws FileNotFoundException
+     */
     private void restartDungeon() throws FileNotFoundException {
     	String pastDungeon = this.loadedDungeonPath;
     	if (pastDungeon == null) return;
     	loadDungeon(pastDungeon);
     }
 
+    /**
+     * Load the dungeon to the primary stage, also shows the goal tooltip and
+     * attaching a listener to player and dungeon goal to show popup on game over
+     * or finished dungeon. The main menu will be hidden behind the loaded dungeon
+     * once the function is called. Also requests keyboard press focus.
+     * @param pathname Pathname of the dungeon (json) file
+     * @throws FileNotFoundException
+     */
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
     	// System.out.println(pathname);
@@ -194,7 +211,7 @@ public class DungeonFullController {
     	this.loadedDungeonPath = pathname;
     	Dungeon dungeon = this.loadedDungeon;
     	List<ImageView> initialEntities = dungeonLoader.getEntities();
-    	
+    	this.numGoals = 0;
     	
     	Image ground = new Image("/dirt_0_new.png");
         Image blank = new Image("/blank.png");
@@ -210,8 +227,8 @@ public class DungeonFullController {
         squares.add(new ImageView(backpack), dungeon.getWidth(), 0);
         
 
+        int x = dungeon.getWidth();
         for (int y = 1; y < dungeon.getHeight(); y++) {
-            int x = dungeon.getWidth();
             squares.add(new ImageView(blank), x, y);
         }
 
@@ -254,6 +271,10 @@ public class DungeonFullController {
         });
     }
     
+    /**
+     * Display goals of the dungeon under the dungeon
+     * @param g (DungeonGoals)
+     */
     private void displayGoal(DungeonGoals g) {
     	if(g instanceof TreasureGoal) {
             Image treasure = new Image("/gold_pile.png");
@@ -265,7 +286,7 @@ public class DungeonFullController {
             this.squares.add(l, this.numGoals + 1, this.loadedDungeon.getHeight());
             this.squares.setFillWidth(l, true);
 
-    	}else if (g instanceof EnemiesGoal) {
+    	} else if (g instanceof EnemiesGoal) {
     		Image enemy = new Image("/deep_elf_master_archer.png");
             Label l = new Label();
             l.setMaxWidth(Double.MAX_VALUE);
@@ -274,7 +295,7 @@ public class DungeonFullController {
             this.squares.add(new ImageView(enemy), this.numGoals, this.loadedDungeon.getHeight());
             this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
             this.squares.setFillWidth(l, true);
-    	}else if (g instanceof FloorSwitchGoal) {
+    	} else if (g instanceof FloorSwitchGoal) {
     		Image boulder = new Image("/boulder.png");
             Label l = new Label();
             l.setMaxWidth(Double.MAX_VALUE);
@@ -283,10 +304,22 @@ public class DungeonFullController {
             this.squares.add(new ImageView(boulder), this.numGoals, this.loadedDungeon.getHeight());
             this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
             this.squares.setFillWidth(l, true);
+    	} else if (g instanceof ExitGoal) {
+    		Image exit = new Image("/exit.png");
+    		Label l = new Label();
+    		l.setMaxWidth(Double.MAX_VALUE);
+//          l.setMaxHeight(30);
+    		l.textProperty().bind(Bindings.concat("Last"));
+	        this.squares.add(new ImageView(exit), this.numGoals, this.loadedDungeon.getHeight());
+	        this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
+	        this.squares.setFillWidth(l, true);
     	}
     }
     
-
+    /**
+     * Show popup on player death. Takes a string as information box
+     * @param string
+     */
     private void popupOnDeath(String string) {
     	try {
 			new PopupOnDeathApplication(this, string);
@@ -295,6 +328,10 @@ public class DungeonFullController {
 		}
     }
     
+    /**
+     * Show popup on dungeon completion. Takes a string as information box
+     * @param string
+     */
     private void popupOnFinish(String string) {
     	try {
 			new PopupOnFinishApplication(this, string);
@@ -303,6 +340,9 @@ public class DungeonFullController {
 		}
     }
     
+    /**
+     * Clear the dungeon from the primary stage, showing the main menu
+     */
     private void clearDungeon() {
     	this.loadedDungeon = null;
     	this.loadedDungeonPath = null;
@@ -311,15 +351,20 @@ public class DungeonFullController {
     	this.stage.setWidth(400 + 16);
     	this.stage.setHeight(300 + 32 + 7);
     }
-    
-    public GridPane getSquares() {
-    	return this.squares;
-    }
-    
+
+    /**
+     * Set stage of the dungeon, which will be needed by the controller to
+     * set up the stage. Only called once by the dungeonapplication.
+     * @param stage
+     */
     public void setStage(Stage stage) {
     	this.stage = stage;
     }
 
+    /**
+     * Drop the bomb
+     * @param player
+     */
     private void dropBomb(Player player) {
     	int x = player.getX();
     	int y = player.getY();
@@ -386,10 +431,18 @@ public class DungeonFullController {
         });
     }
     
+    /**
+     * Get the loaded dungeon
+     * @return (Dungeon) loaded dungeon
+     */
     public Dungeon getDungeon() {
     	return this.loadedDungeon;
     }
 
+    /**
+     * Create a new random dungeon
+     * @throws FileNotFoundException
+     */
     public void newRandomDungeon() throws FileNotFoundException {
     	Random rand = new Random();
     	int random = rand.nextInt(dungeonPaths.size());
@@ -397,6 +450,9 @@ public class DungeonFullController {
     	loadDungeon(dungeonPaths.get(random));
     }
     
+    /**
+     * Disable keyboard controller. Only called when the dungeon is done.
+     */
     private void disableController() {
     	this.controllerOn = false;
     }

@@ -13,16 +13,13 @@ import javafx.stage.Stage;
 
 public class DungeonFullApplication extends Application {
 
+	/**
+	 * Start the primary stage of the application
+	 */
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
 
-        // DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("advanced_more.json");
-        // DungeonController controller = dungeonLoader.loadController();
-        
-        // In this case, there is no loader needed
-        // The controller will load the dungeon as needed
-        // Check Game Of Life controller as reference
         List<String> dungeons = new ArrayList<>();
         
         File folder = new File("dungeons");
@@ -33,7 +30,6 @@ public class DungeonFullApplication extends Application {
                 dungeons.add(file.getName());
             }
         }
-        
         
         DungeonFullController controller = new DungeonFullController(dungeons);
         

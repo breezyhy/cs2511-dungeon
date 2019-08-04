@@ -87,6 +87,8 @@ public class PauseController {
 			i = new Image("/brilliant_blue_new.png");
 		else if(e instanceof Bomb_Unlit)
 			i = new Image("/bomb_unlit.png");
+		else if(e instanceof Key)
+			i = new Image("/key.png");
 		return i;
 	}
 

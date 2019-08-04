@@ -22,6 +22,10 @@ public class Key extends EntityConsumable {
         return true;
     }
     
+    /**
+     * Get id of the key. The corresponding door must have the same ID in order to unlock the door
+     * @return id of the key
+     */
     public int getID() {
     	return this.id;
     }
@@ -36,5 +40,10 @@ public class Key extends EntityConsumable {
             return true;
         }
         return false;
+    }
+    
+    public void drop(int x, int y) {
+    	x().set(x);
+    	y().set(y);
     }
 }

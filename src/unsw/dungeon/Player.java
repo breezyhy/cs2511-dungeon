@@ -106,6 +106,11 @@ public class Player extends EntityMoveable implements Subject {
     	return backpack.useBomb();
     }
     
+    public void dropKey() {
+    	if (backpack != null)
+    		backpack.dropKey(x().get(), y().get());
+    }
+    
     /**
      * 
      * @param x the x position of the entity player collides with

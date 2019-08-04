@@ -32,39 +32,78 @@ public class Dungeon {
         this.gametick = null;
     }
 
+    /**
+     * Get width of the dungeon, in cell unit
+     * @return
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Get height of the dungeon, in cell unit
+     * @return
+     */
     public int getHeight() {
         return height;
     }
 
+    /**
+     * Get player of the dungeon
+     * @return
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Set player of the dungeon
+     * @param player
+     */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     * Add entity to the dungeon
+     * @param entity
+     */
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
     
+    /**
+     * Remove entity from the dungeon
+     * @param entity
+     */
     public void removeEntity(Entity entity) {
-    	entities.remove(entity);
+    	if (entities.contains(entity))
+    		entities.remove(entity);
     }
 
+    /**
+     * Set the goal of the dungeon, which can be a single goal or multiplegoals
+     * Goals are wrapped under DungeonGoals composite abstract class
+     * @param goals
+     */
     public void setGoal(DungeonGoals goals) {
         this.goals = goals;
     }
     
-
+    /**
+     * Get the goal of the dungeon
+     * @return
+     */
     public DungeonGoals getGoal() {
         return this.goals;
     }
 
+    /**
+     * Get entity on the given coordinate
+     * @param x
+     * @param y
+     * @return list of all entity on the coordinate, in form of List<Entity>
+     */
     public List<Entity> getCollidingEntity(int x, int y) {
         List<Entity> collide = new ArrayList<>();
         for (Entity entity : entities) {
@@ -75,6 +114,13 @@ public class Dungeon {
         return collide;
     }
 
+    /**
+     * Get entities on the surrounding of the given coordinate
+     * Surrounding means directly adjacent (direct left/right/up/down)
+     * @param x
+     * @param y
+     * @return list of all surrounding entities, in form of List<Entity>
+     */
     public List<Entity> getSurroundingEntity(int x, int y) {
         List<Entity> collide = new ArrayList<>();
         for (Entity entity : entities) {
@@ -95,10 +141,17 @@ public class Dungeon {
         return collide;
     }
 
+    /**
+     * Set tick listener for all entities by calling the gametick
+     */
     public void setTickListener() {
     	this.gametick.attachTickListener(this);
     }
     
+    /**
+     * Get any gametick listener (entities) from list of entities inside the dungeon
+     * @return list of gametick listener
+     */
     public ArrayList<GameTickSubscriber> getTickListener() {
         ArrayList<GameTickSubscriber> listener = new ArrayList<>();
         for (Entity e : entities) {
@@ -108,8 +161,9 @@ public class Dungeon {
         return listener;
     }
 
-    // Game tick loader
-    // Needs to be loaded initially
+    /**
+     * Game tick loader which gets initialized once by DungeonLoader
+     */
     public void initiateTicker() {
         if (gametick != null)
             throw new UnsupportedOperationException();
@@ -118,8 +172,9 @@ public class Dungeon {
         player.registerObserver(this.gametick);
     }
 
-    // Entity observer interactions
-    // Needs to be loaded initially
+    /**
+     * Attaching floor switch (observer) to boulders
+     */
     public void attachBoulderObservers() {
         List<Boulder> boulders = new ArrayList<>();
         List<FloorSwitch> fswitches = new ArrayList<>();
@@ -138,6 +193,9 @@ public class Dungeon {
         }
     }
 
+    /**
+     * Attaching exit (observer) to player
+     */
     public void attachExitObservers() {
         Player player = null;
         Exit exit = null;
@@ -149,14 +207,16 @@ public class Dungeon {
             }
         }
 
-        if (exit == null)
+        if (exit == null || player == null)
             return;
         System.out.println("Attaching exit-player observer");
         player.registerObserver(exit);
     }
 
+    /**
+     * Notify all boulders in the beginning of the dungeon
+     */
     public void updateAllBoulders() {
-        List<Boulder> boulders = new ArrayList<>();
         for (Entity entity : entities) {
             if ((entity instanceof Boulder)) {
                 ((Boulder) entity).notifyObservers();
@@ -164,7 +224,10 @@ public class Dungeon {
         }
     }
 
-    // Loader's functions
+    /**
+     * Get exit of the dungeon, which gets called by loader
+     * @return exit object of the dungeon or null, depending on the dungeon
+     */
     public Exit getExit() {
         for (Entity e : entities) {
             if (e instanceof Exit)
@@ -173,6 +236,11 @@ public class Dungeon {
         return null;
     }
 
+    /**
+     * Get arraylist of enemies inside the dungeon. 
+     * Gets called by the loader to attach EnemiesGoal
+     * @return ArrayList of Enemy
+     */
     public ArrayList<Enemy> getEnemies() {
         ArrayList<Enemy> enemies = new ArrayList<>();
         for (Entity e : entities) {
@@ -182,6 +250,11 @@ public class Dungeon {
         return enemies;
     }
 
+    /**
+     * Get arraylist of treasures inside the dungeon
+     * Gets called by the loader to attach TreasureGoal
+     * @return ArrayList of Treasure
+     */
     public ArrayList<Treasure> getTreasures() {
         ArrayList<Treasure> treasures = new ArrayList<>();
         for (Entity e : entities) {
@@ -191,6 +264,11 @@ public class Dungeon {
         return treasures;
     }
 
+    /**
+     * Get arraylist of floorswitch inside the dungeon
+     * Gets called by the loader to attach FloorSwitchGoal
+     * @return ArrayList of FloorSwitch
+     */
     public ArrayList<FloorSwitch> getFloorSwitch() {
         ArrayList<FloorSwitch> fs = new ArrayList<>();
         for (Entity e : entities) {

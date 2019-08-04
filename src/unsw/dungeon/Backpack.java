@@ -25,11 +25,32 @@ public class Backpack {
     
     public void removeConsumables(EntityConsumable i) {
         if (itemList.contains(i)) {
-            ((Entity) i).x().set(getStoringColumn() + 1);
+            ((Entity) i).setVisibility(false);
             itemList.remove(i);
+            itemSize--;
+            rearrange();
+        }
+    }
+    
+    public void dropConsumables(EntityConsumable i) {
+        if (itemList.contains(i)) {
+            itemList.remove(i);
+            itemSize--;
+            rearrange();
         }
     }
 
+    /**
+     * Rearrange items in the backpack to make the backpack interface looks neat
+     */
+    private void rearrange() {
+    	int i = 1;
+    	for (EntityConsumable x : itemList) {
+    		x.y().set(i);
+    		i++;
+    	}
+    }
+    
     public int getStoringColumn() {
         return this.dungeon.getWidth();
     }
@@ -176,4 +197,17 @@ public class Backpack {
         return false;
     }
 
+    
+    public void dropKey(int x, int y) {
+    	Key key = null;
+    	for (EntityConsumable k : itemList) {
+    		if (k instanceof Key) {
+    			key = (Key) k;
+    		}
+    	}
+    	if (key != null) {
+    		this.dropConsumables(key);
+    		key.drop(x, y);    		
+    	}
+    }
 }

@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class ExitGoal extends DungeonGoals implements Observer {
     private String name;
