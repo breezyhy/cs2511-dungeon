@@ -9,8 +9,10 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -50,7 +52,16 @@ public class DungeonFullController {
 	private Menu levelmenu;
 
     @FXML
-    private Pane textpane;
+    private Pane textpane1;
+    
+    @FXML
+    private Pane textpane2;
+    
+    @FXML
+    private Pane boxpane1;
+    
+    @FXML
+    private Pane boxpane2;
     
 	@FXML
 	private Pane mainpane;
@@ -69,8 +80,10 @@ public class DungeonFullController {
 	private Dungeon loadedDungeon = null;
 	private String loadedDungeonPath = null;
 	private ChoiceBox<String> choicebox = null;
+	private ChoiceBox<String> diffbox = null;
 	private int numGoals;
 	private boolean controllerOn;
+	private int startingHp;
 	
 	/**
 	 * Instantiate the controller of the application. Takes list of dungeon (json) filename
@@ -86,10 +99,15 @@ public class DungeonFullController {
 	public void initialize() {
     	// System.out.println(levelmenu);
     	
-    	textpane.getChildren().add(new Text("Select dungeon"));
-    	
+    	textpane1.getChildren().add(new Text("Select dungeon"));
     	choicebox = new ChoiceBox<String>();
-    	mainpane.getChildren().add(choicebox);
+    	boxpane1.getChildren().add(choicebox);
+    	
+    	textpane2.getChildren().add(new Text("Select difficulty"));
+    	diffbox = new ChoiceBox<String>();
+    	diffbox.getItems().addAll("Easy", "Medium", "Hard");
+    	diffbox.setValue("Hard");
+    	boxpane2.getChildren().add(diffbox);
     	
     	for (int i = 0; i < dungeonPaths.size(); i++) {
     		
@@ -213,6 +231,9 @@ public class DungeonFullController {
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
     	// System.out.println(pathname);
+    	int diffboxhealth = diffbox.getSelectionModel().getSelectedIndex();
+    	this.startingHp = 5 - diffboxhealth * 2;
+    	
     	DungeonFullLoader dungeonLoader = new DungeonFullLoader(pathname, disablewitch.isSelected(), disablehound.isSelected());
     	this.loadedDungeon = dungeonLoader.load();
     	this.loadedDungeonPath = pathname;
@@ -259,12 +280,21 @@ public class DungeonFullController {
         squares.requestFocus();
         
         Player player = dungeon.getPlayer();
+        player.setHP(this.startingHp);
         player.aliveProperty().addListener(new ChangeListener<Boolean>() {
         	@Override
         	public void changed(ObservableValue<? extends Boolean> observable,
         			Boolean oldValue, Boolean newValue) {
         		popupOnDeath("You died");
         	}
+        });
+        showHealth();
+        player.getHP().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable,
+            		Number oldValue, Number newValue) {
+            	showHealth();
+            }
         });
         
         DungeonGoals dGoal = loadedDungeon.getGoal();
@@ -277,6 +307,32 @@ public class DungeonFullController {
         	}
         });
     }
+    
+    private void showHealth() {
+    	Player p = loadedDungeon.getPlayer();
+    	Image heart = new Image("/heart.png");
+    	int health = p.getHP().get();
+    	int total = startingHp;
+    	for(int i = 0; i < total; i++) {
+    		clearHealth(this.loadedDungeon.getWidth() - i);
+    	}
+    	for(int i = 0; i < health; i++) {
+    		this.squares.add(new ImageView(heart), this.loadedDungeon.getWidth()-i, this.loadedDungeon.getHeight());
+    	}
+    	this.squares.add(new Label("HP:"), this.loadedDungeon.getWidth()-total ,this.loadedDungeon.getHeight());
+    }
+    
+    private void clearHealth(int row) {
+    	ObservableList<Node> childrens = this.squares.getChildren();
+    	for(Node node : childrens) {
+    	    if(node instanceof ImageView && GridPane.getRowIndex(node) == this.loadedDungeon.getHeight() && GridPane.getColumnIndex(node) == row) {
+    	    	ImageView imageView = (ImageView) node; // use what you want to remove
+    	        this.squares.getChildren().remove(imageView);
+    	        break;
+    	    }
+    	}
+    }
+
     
     /**
      * Display goals of the dungeon under the dungeon

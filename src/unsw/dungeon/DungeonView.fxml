@@ -12,22 +12,17 @@
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="textpane" layoutX="100.0" layoutY="71.0" prefHeight="25.0" prefWidth="200.0" />
-      <Pane fx:id="mainpane" layoutX="100.0" layoutY="107.0" prefHeight="148.0" prefWidth="200.0">
+      <Pane fx:id="textpane1" layoutX="21.0" layoutY="68.0" prefHeight="25.0" prefWidth="172.0" />
+      <Pane fx:id="boxpane1" layoutX="21.0" layoutY="95.0" prefHeight="25.0" prefWidth="172.0" />
+      <Pane fx:id="textpane2" layoutX="214.0" layoutY="68.0" prefHeight="25.0" prefWidth="172.0" />
+      <Pane fx:id="boxpane2" layoutX="214.0" layoutY="95.0" prefHeight="25.0" prefWidth="172.0" />
+      <Pane fx:id="mainpane" layoutX="100.0" layoutY="139.0" prefHeight="116.0" prefWidth="200.0">
          <children>
-            <Button layoutX="70.0" layoutY="109.0" mnemonicParsing="false" onAction="#launchDungeon" text="Launch" />
-            <CheckBox fx:id="disablewitch" layoutY="46.0" mnemonicParsing="false" text="Disable witch (if applicable)" />
-            <CheckBox fx:id="disablehound" layoutY="72.0" mnemonicParsing="false" text="Disable hound (if applicable)" />
+            <Button layoutX="73.0" layoutY="77.0" mnemonicParsing="false" onAction="#launchDungeon" text="Launch" />
+            <CheckBox fx:id="disablewitch" layoutY="25.0" mnemonicParsing="false" text="Disable witch (if applicable)" />
+            <CheckBox fx:id="disablehound" layoutY="50.0" mnemonicParsing="false" text="Disable hound (if applicable)" />
          </children>
       </Pane>
-      <GridPane fx:id="squares" layoutY="25.0" onKeyPressed="#handleKeyPress" prefWidth="400.0">
-         <columnConstraints>
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-      </GridPane>
       <MenuBar fx:id="menubar" prefHeight="25.0" prefWidth="400.0">
         <menus>
           <Menu mnemonicParsing="false" text="Options">
@@ -40,5 +35,13 @@
           <Menu fx:id="levelmenu" mnemonicParsing="false" text="Choose Level" />
         </menus>
       </MenuBar>
+      <GridPane fx:id="squares" layoutY="25.0" onKeyPressed="#handleKeyPress" prefWidth="400.0">
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
    </children>
 </Pane>

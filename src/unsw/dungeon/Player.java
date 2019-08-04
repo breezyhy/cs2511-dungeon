@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * The player entity
@@ -17,7 +18,8 @@ public class Player extends EntityMoveable implements Subject {
     private Backpack backpack;
     private ArrayList<Observer> playerObserver;
     private BooleanProperty alive;
-
+    private SimpleIntegerProperty hp;
+    private int totalHP;
     /**
      * Create a player positioned in square (x,y)
      * 
@@ -29,6 +31,8 @@ public class Player extends EntityMoveable implements Subject {
         this.backpack = new Backpack(dungeon);
         this.playerObserver = new ArrayList<>();
         this.alive = new SimpleBooleanProperty(true);
+        this.hp = new SimpleIntegerProperty(5);
+        this.totalHP = 5;
     }
     
     public void die() {
@@ -101,7 +105,29 @@ public class Player extends EntityMoveable implements Subject {
         }
         notifyObservers();
     }
-
+/*
+    public int getHp() {
+    	return this.hp.get();
+    }*/
+    
+    public SimpleIntegerProperty getHP() {
+    	return this.hp;
+    }
+    
+    public void loseHp() {
+    	this.hp.set(this.hp.get() - 1);
+    	
+    }
+    
+    public int getTotalHP() {
+    	return this.totalHP;
+    }
+    
+    public void setHP(int hp) {
+    	this.totalHP = hp;
+    	this.hp.set(hp);
+    }
+    
     public boolean dropBomb() {
     	return backpack.useBomb();
     }
@@ -110,6 +136,7 @@ public class Player extends EntityMoveable implements Subject {
     	if (backpack != null)
     		backpack.dropKey(x().get(), y().get());
     }
+
     
     /**
      * 
@@ -149,7 +176,7 @@ public class Player extends EntityMoveable implements Subject {
         if (backpack.useConsumable(e)) {
             return true;
         }
-        die();
+        // die();
         return false;
     }
     
@@ -157,9 +184,10 @@ public class Player extends EntityMoveable implements Subject {
         if (backpack.useConsumableWitch(e)) {
             return true;
         }
-        die();
+        // die();
         return false;
     }
+
     
     /**
      * Called when player collides with a door, and key needs to be used
