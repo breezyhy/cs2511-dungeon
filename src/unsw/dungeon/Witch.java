@@ -8,6 +8,7 @@ public class Witch extends Enemy {
 		super(dungeon, x, y);
 	}
 
+	@Override
 	public boolean resolveCollision(EntityMoveable e) {
         if (e instanceof Enemy)
             return true;
