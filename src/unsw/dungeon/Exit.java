@@ -1,5 +1,9 @@
 package unsw.dungeon;
-
+/**
+ * Implements an exit that is both an entity in the spec and used to achieve the ExitGoal criteria
+ * that is described in the spec
+ *
+ */
 public class Exit extends EntityNonblocking implements Observer, Subject {
 
     private boolean playerExit = false;
@@ -8,7 +12,9 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
     public Exit(int x, int y) {
         super(x, y);
     }
-
+    /**
+     * Used to notify oberservers of when a player is on the Exit
+     */
     @Override
     public void update(Subject obj) {
         if (!(obj instanceof Player))
@@ -45,7 +51,4 @@ public class Exit extends EntityNonblocking implements Observer, Subject {
         if (exitObserver != null)
             exitObserver.update(this);
     }
-
-    // TODO
-    // Method to check whether all other goals has been satisfied
 }

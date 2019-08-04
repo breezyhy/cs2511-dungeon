@@ -10,7 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+/**
+ * Class that handles the full application of the Dungeon
+ * @author z5161251
+ *
+ */
 public class DungeonFullApplication extends Application {
 
 	/**
@@ -24,7 +28,8 @@ public class DungeonFullApplication extends Application {
         
         File folder = new File("dungeons");
         File[] listOfFiles = folder.listFiles();
-
+        
+        //Get name of each JSON file which contains the dungeon
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 dungeons.add(file.getName());

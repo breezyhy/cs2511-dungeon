@@ -28,6 +28,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Full controller of the dungeon, handling all input and UI updating
+ * @author z5161251
+ *
+ */
 public class DungeonFullController {
 
 	@FXML
@@ -94,27 +99,28 @@ public class DungeonFullController {
     	this.dungeonPaths = dungeonPaths;
     }
     
-    
+    /**
+     * Overriden from FXML Application class, is used to show the first screen to the player
+     */
     @FXML
 	public void initialize() {
-    	// System.out.println(levelmenu);
-    	
-    	textpane1.getChildren().add(new Text("Select dungeon"));
-    	choicebox = new ChoiceBox<String>();
-    	boxpane1.getChildren().add(choicebox);
-    	
+    	//Add difficulty choice to game
     	textpane2.getChildren().add(new Text("Select difficulty"));
     	diffbox = new ChoiceBox<String>();
     	diffbox.getItems().addAll("Easy", "Medium", "Hard");
     	diffbox.setValue("Hard");
     	boxpane2.getChildren().add(diffbox);
     	
+    	//Select a level from the list
+    	textpane1.getChildren().add(new Text("Select dungeon"));
+    	choicebox = new ChoiceBox<String>();
+    	boxpane1.getChildren().add(choicebox);
+    	
     	for (int i = 0; i < dungeonPaths.size(); i++) {
     		
     		// Set up the levelmenu
     		String name = dungeonPaths.get(i);
     		String rname = name.replaceAll(".json$", "");
-    		// System.out.println("here " + rname);
     		MenuItem r = new MenuItem(rname);
     		r.setOnAction((event) -> {
     			// Load the dungeon with the specified name
@@ -131,9 +137,12 @@ public class DungeonFullController {
     	}
 	}
     
+    /**
+     * Overriden from JavaFX, handles all key input from the client
+     * @param event
+     */
     @FXML
     void handleKeyPress(KeyEvent event) {
-    	// System.out.println("keyevent " + event);
     	if (loadedDungeon == null) return;
     	if (controllerOn == false) return;
     	
@@ -180,6 +189,10 @@ public class DungeonFullController {
         }
     }
 
+    /**
+     * Returns the player to the main menu, where they can choose difficulty settings
+     * @param event
+     */
     @FXML
     void mainmenu(ActionEvent event) {
     	clearDungeon();
@@ -204,6 +217,11 @@ public class DungeonFullController {
 		}
     }
     
+    /**
+     * Restarts dungeon with all entities in their initial position
+     * @param event
+     * @throws FileNotFoundException
+     */
     @FXML
     void restart(ActionEvent event) throws FileNotFoundException {
     	restartDungeon();
@@ -308,6 +326,9 @@ public class DungeonFullController {
         });
     }
     
+    /**
+     * Displays the players current health at the bottom of the screen
+     */
     private void showHealth() {
     	Player p = loadedDungeon.getPlayer();
     	Image heart = new Image("/heart.png");
@@ -322,6 +343,10 @@ public class DungeonFullController {
     	this.squares.add(new Label("HP:"), this.loadedDungeon.getWidth()-total ,this.loadedDungeon.getHeight());
     }
     
+    /**
+     * Helper function for above, used to redraw the health of the player 
+     * @param Current row to clear
+     */
     private void clearHealth(int row) {
     	ObservableList<Node> childrens = this.squares.getChildren();
     	for(Node node : childrens) {
@@ -343,7 +368,6 @@ public class DungeonFullController {
             Image treasure = new Image("/gold_pile.png");
             Label l = new Label();
             l.setMaxWidth(Double.MAX_VALUE);
-//            l.setMaxHeight(30);
             l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
             this.squares.add(new ImageView(treasure), this.numGoals, this.loadedDungeon.getHeight());
             this.squares.add(l, this.numGoals + 1, this.loadedDungeon.getHeight());
@@ -353,7 +377,6 @@ public class DungeonFullController {
     		Image enemy = new Image("/deep_elf_master_archer.png");
             Label l = new Label();
             l.setMaxWidth(Double.MAX_VALUE);
-//            l.setMaxHeight(30);
             l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
             this.squares.add(new ImageView(enemy), this.numGoals, this.loadedDungeon.getHeight());
             this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());
@@ -362,7 +385,6 @@ public class DungeonFullController {
     		Image boulder = new Image("/boulder.png");
             Label l = new Label();
             l.setMaxWidth(Double.MAX_VALUE);
-//            l.setMaxHeight(30);
             l.textProperty().bind(Bindings.concat(g.getProgress().asString(), "/", g.getTotal().asString()));
             this.squares.add(new ImageView(boulder), this.numGoals, this.loadedDungeon.getHeight());
             this.squares.add(l, this.numGoals+1, this.loadedDungeon.getHeight());

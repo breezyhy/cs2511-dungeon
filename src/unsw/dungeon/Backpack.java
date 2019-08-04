@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-/*
+/**
  * A class that stores the items (consumable) that a player is able to pick up
  */
 public class Backpack {

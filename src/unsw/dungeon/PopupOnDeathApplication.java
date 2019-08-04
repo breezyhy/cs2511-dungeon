@@ -11,7 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * Application used for a pop-up that displays when the player dies 
+ * @author z5161251
+ *
+ */
 public class PopupOnDeathApplication {
 
 	public PopupOnDeathApplication(DungeonFullController main, String string) throws IOException {

@@ -105,10 +105,6 @@ public class Player extends EntityMoveable implements Subject {
         }
         notifyObservers();
     }
-/*
-    public int getHp() {
-    	return this.hp.get();
-    }*/
     
     public SimpleIntegerProperty getHP() {
     	return this.hp;
@@ -180,6 +176,11 @@ public class Player extends EntityMoveable implements Subject {
         return false;
     }
     
+    /**
+     * A witch is only killed by a specific item from a player, so has independent immunity
+     * @param Witch
+     * @return boolean dependent on outcome of collision
+     */
     public boolean isImmuneWitch(Witch e) {
         if (backpack.useConsumableWitch(e)) {
             return true;

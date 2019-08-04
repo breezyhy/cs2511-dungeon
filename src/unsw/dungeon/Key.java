@@ -8,7 +8,10 @@ public class Key extends EntityConsumable {
         super(x, y);
         this.id = id;
     }
-
+    
+    /**
+     * A player can only carry one key at a time
+     */
     @Override
     public boolean resolveCollision(EntityMoveable obj) {
         if (!(obj instanceof Player))
@@ -29,7 +32,13 @@ public class Key extends EntityConsumable {
     public int getID() {
     	return this.id;
     }
-
+    
+    /**
+     * Use key on Door d, if the id of the key and the door matches, and switches the state of the 
+     * door
+     * @param Door d
+     * @return boolean dependent on use of key
+     */
     public boolean useKey(Door d) {
         if (getBackpack() == null)
             return false;

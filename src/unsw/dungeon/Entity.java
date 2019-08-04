@@ -53,23 +53,48 @@ public abstract class Entity {
     public int getX() {
         return x().get();
     }
-
+    
+    /**
+     * Method that checks a collision between this entity and a consumable in the dungeon
+     * @param Consumable 
+     * @return	boolean dependent on if it is to be picked up/passed through	
+     */
     public boolean resolveCollision(EntityConsumable obj) {
         return false;
     }
 
+    /**
+     * Method that resolves a collision between a blocking entity (eg Wall) and this entity
+     * @param Blocking entity
+     * @return boolean dependent on collision resolution
+     */
     public boolean resolveCollision(EntityBlocking obj) {
         return false;
     }
-
+    
+    /**
+     * Method to resolve collision between a semi-blocking entity and this entity
+     * @param Semi-blocking entity
+     * @return boolean dependent on collision resolution
+     */
     public boolean resolveCollision(EntitySemiblocking obj) {
         return false;
     }
 
+    /**
+     * Method to resolve a collision between a non-blocking entity and this entity
+     * @param Non-blocking entity
+     * @return boolean dependent on collision resolution
+     */
     public boolean resolveCollision(EntityNonblocking obj) {
         return true;
     }
 
+    /**
+     * Method to resolve a collision between a moveable entity and this entity
+     * @param Moveable entity
+     * @return boolean dependent on collision resolution
+     */
     public boolean resolveCollision(EntityMoveable obj) {
         return false;
     }

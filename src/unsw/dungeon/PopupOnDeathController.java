@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Controller used for a pop-up for when the player dies
+ */
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

@@ -215,7 +215,11 @@ public class DungeonFullLoader extends DungeonLoader {
         });
     }
     
-    // Track door state, whether it's been unlocked
+	/**
+	 * Track the state of a door entity, to display the correct image for the client
+	 * @param Door to track
+	 * @param ImageView to display for each state
+	 */
     private void trackState(Door door, ImageView node) {
     	door.accessibleProperty().addListener(new ChangeListener<Boolean>() {
         	@Override

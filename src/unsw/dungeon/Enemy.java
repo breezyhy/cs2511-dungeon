@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An implementation of the Enemy entity given in the spec
+ *
+ */
 public class Enemy extends EntityMoveable implements MultipleSubject, GameTickSubscriber {
 
     private MultipleObserver enemyObserver = null;
@@ -61,7 +64,7 @@ public class Enemy extends EntityMoveable implements MultipleSubject, GameTickSu
         return true;
     }
 
-    // You can't be squashed by an entity
+
     public boolean resolveCollision(EntitySemiblocking e) {
         return false;
     }

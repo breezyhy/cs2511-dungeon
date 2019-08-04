@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
+/**
+ * Implements the floor switch goal as detailed in the spec to complete or partially complete a dungeon
+ * @author z5161251
+ *
+ */
 public class FloorSwitchGoal extends DungeonGoals implements MultipleObserver {
     private String name;
     private SimpleBooleanProperty achieved;
@@ -49,9 +53,11 @@ public class FloorSwitchGoal extends DungeonGoals implements MultipleObserver {
         return achieved;
     }
 
+    /**
+     * Checks to see whether all floor switches are in their 'on' state
+     */
     @Override
     public void update(MultipleSubject obj) {
-        // System.out.println("Called");
         boolean done = true;
         int count = 0;
         for (MultipleSubject fs : subjects) {

@@ -11,7 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * An application used to display a pause screen to the client
+ * @author z5161251
+ *
+ */
 public class PauseApplication {
 
 	public PauseApplication(DungeonFullController main) throws IOException {

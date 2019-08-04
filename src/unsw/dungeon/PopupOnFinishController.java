@@ -7,7 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * Controller used for when the player completes the game pop up screen
+ * @author z5161251
+ *
+ */
 public class PopupOnFinishController {
 
     @FXML

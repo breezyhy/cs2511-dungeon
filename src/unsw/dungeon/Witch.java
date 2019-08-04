@@ -1,5 +1,9 @@
 package unsw.dungeon;
-
+/**
+ * Implements an extension of the Enemy class, which does not move 
+ * @author z5161251
+ *
+ */
 public class Witch extends Enemy {
 
 	private MultipleObserver enemyObserver = null;

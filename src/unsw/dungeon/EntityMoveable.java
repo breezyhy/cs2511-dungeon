@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the EntityMoveable abstract class, used with entities in the dungeon that are moveable
+ */
 public abstract class EntityMoveable extends Entity {
 
     private Dungeon dungeon = null;

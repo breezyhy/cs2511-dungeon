@@ -204,6 +204,11 @@ public abstract class DungeonLoader {
         return dGoals;
     }
 
+    /**
+     * Attach an observer for an exitGoal, so that the goal knows when it has been achieved
+     * @param Exit goal
+     * @param dungeon
+     */
     private void attachGoal(ExitGoal goal, Dungeon dungeon){
         Exit exit = dungeon.getExit();
         if (exit == null) throw new UnsupportedOperationException();
@@ -211,6 +216,11 @@ public abstract class DungeonLoader {
         exit.registerObserver(goal);
     }
 
+    /**
+     * Attach an observer to each of the enemies in the dungeon, so that the goal knows when it has been achieved
+     * @param EnemiesGoal
+     * @param dungeon
+     */
     private void attachGoal(EnemiesGoal goal, Dungeon dungeon){
         ArrayList<Enemy> enemies = dungeon.getEnemies();
         if (enemies.size() == 0) throw new UnsupportedOperationException();
@@ -220,7 +230,11 @@ public abstract class DungeonLoader {
             e.registerObserver(goal);
         }
     }
-
+    /**
+     * Attach an observer to each instance of treasure, so that the goal knows when it has been achieved
+     * @param TreasureGoal
+     * @param dungeon
+     */
     private void attachGoal(TreasureGoal goal, Dungeon dungeon){
         ArrayList<Treasure> treasures = dungeon.getTreasures();
         if (treasures.size() == 0) throw new UnsupportedOperationException();
@@ -229,7 +243,12 @@ public abstract class DungeonLoader {
             t.registerObserver(goal);
         }
     }
-
+    
+    /**
+     * Attach an observer to each floor switch, so that the goal knows when it has been achieved
+     * @param goal
+     * @param dungeon
+     */
     private void attachGoal(FloorSwitchGoal goal, Dungeon dungeon){
         ArrayList<FloorSwitch> fs = dungeon.getFloorSwitch();
         if (fs.size() == 0) throw new UnsupportedOperationException();

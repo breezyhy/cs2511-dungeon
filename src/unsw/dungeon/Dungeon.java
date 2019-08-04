@@ -34,7 +34,7 @@ public class Dungeon {
 
     /**
      * Get width of the dungeon, in cell unit
-     * @return
+     * @return width of dungeon
      */
     public int getWidth() {
         return width;
@@ -42,7 +42,7 @@ public class Dungeon {
 
     /**
      * Get height of the dungeon, in cell unit
-     * @return
+     * @return height of dungeon
      */
     public int getHeight() {
         return height;
@@ -50,7 +50,7 @@ public class Dungeon {
 
     /**
      * Get player of the dungeon
-     * @return
+     * @return Player character
      */
     public Player getPlayer() {
         return player;

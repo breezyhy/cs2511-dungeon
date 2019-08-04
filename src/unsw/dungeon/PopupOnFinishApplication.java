@@ -11,7 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * Controller used for pop-up when the player succesfully completes the dungeon
+ * @author z5161251
+ *
+ */
 public class PopupOnFinishApplication {
 
 	public PopupOnFinishApplication(DungeonFullController main, String string) throws IOException {

@@ -15,7 +15,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+/**
+ * Controller used to display a pause screen for the client
+ * @author z5161251
+ *
+ */
 public class PauseController {
 
 	@FXML

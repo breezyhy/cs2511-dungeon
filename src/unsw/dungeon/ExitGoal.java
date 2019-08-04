@@ -1,7 +1,8 @@
 package unsw.dungeon;
-
+/**
+ * Implements the ExitGoal that must be achieved in order to finish a dungeon if presribed
+ */
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 public class ExitGoal extends DungeonGoals implements Observer {
     private String name;

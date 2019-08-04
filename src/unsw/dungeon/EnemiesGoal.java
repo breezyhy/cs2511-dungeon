@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-
+/**
+ * Implements the goal of destroying all enemies in the dungeon. Is an extension of a DungeonGoals
+ * @author z5161251
+ *
+ */
 public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
     private String name;
     private SimpleBooleanProperty achieved;
@@ -49,6 +53,10 @@ public class EnemiesGoal extends DungeonGoals implements MultipleObserver {
         return achieved;
     }
 
+    /**
+     * Checks to see whether the goal has been achieved yet, by checking to see if each of the 
+     * objects its observing is alive
+     */
     @Override
     public void update(MultipleSubject obj) {
     	boolean done = true;

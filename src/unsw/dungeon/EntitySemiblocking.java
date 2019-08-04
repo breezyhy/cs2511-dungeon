@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the EntitySemiblocking abstract class, used with entities in the dungeon that are semiblocking
+ */
 public abstract class EntitySemiblocking extends Entity {
 
     public EntitySemiblocking(int x, int y) {

@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the EntityConsumable abstract class, used with entities in the dungeon that are consumable
+ */
 public abstract class EntityConsumable extends Entity {
 
     private Backpack backpack = null;
