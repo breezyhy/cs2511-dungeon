@@ -20,9 +20,13 @@ import org.json.JSONTokener;
 public abstract class DungeonLoader {
 
     private JSONObject json;
-
-    public DungeonLoader(String filename) throws FileNotFoundException {
+    private boolean disableWitch;
+    private boolean disableHound;
+    
+    public DungeonLoader(String filename, boolean disableWitch, boolean disableHound) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
+        this.disableWitch = disableWitch;
+        this.disableHound = disableHound;
     }
 
     /**
@@ -126,11 +130,13 @@ public abstract class DungeonLoader {
             entity = enemy;
             break;
         case "hound":
+        	if (this.disableHound) return;
             Hound hound = new Hound(dungeon, x, y);
             onLoad(hound);
             entity = hound;
             break;
         case "witch":
+        	if (this.disableWitch) return;
             Witch witch = new Witch(dungeon, x, y);
             onLoad(witch);
             entity = witch;

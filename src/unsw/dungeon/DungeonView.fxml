@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,12 +10,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="textpane" layoutX="100.0" layoutY="116.0" prefHeight="25.0" prefWidth="200.0" />
-      <Pane fx:id="mainpane" layoutX="100.0" layoutY="141.0" prefHeight="96.0" prefWidth="200.0">
+      <Pane fx:id="textpane" layoutX="100.0" layoutY="71.0" prefHeight="25.0" prefWidth="200.0" />
+      <Pane fx:id="mainpane" layoutX="100.0" layoutY="107.0" prefHeight="148.0" prefWidth="200.0">
          <children>
-            <Button layoutX="73.0" layoutY="59.0" mnemonicParsing="false" onAction="#launchDungeon" text="Launch" />
+            <Button layoutX="70.0" layoutY="109.0" mnemonicParsing="false" onAction="#launchDungeon" text="Launch" />
+            <CheckBox fx:id="disablewitch" layoutY="46.0" mnemonicParsing="false" text="Disable witch (if applicable)" />
+            <CheckBox fx:id="disablehound" layoutY="72.0" mnemonicParsing="false" text="Disable hound (if applicable)" />
          </children>
       </Pane>
       <GridPane fx:id="squares" layoutY="25.0" onKeyPressed="#handleKeyPress" prefWidth="400.0">

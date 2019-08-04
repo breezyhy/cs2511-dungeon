@@ -41,9 +41,9 @@ public class DungeonFullLoader extends DungeonLoader {
     private Image houndImage;
     private Image witchImage;
 
-    public DungeonFullLoader(String filename)
+    public DungeonFullLoader(String filename, boolean disableWitch, boolean disableHound)
             throws FileNotFoundException {
-        super(filename);
+        super(filename, disableWitch, disableHound);
         entities = new ArrayList<>();
         playerImage = new Image("/human_new.png");
         wallImage = new Image("/brick_brown_0.png");

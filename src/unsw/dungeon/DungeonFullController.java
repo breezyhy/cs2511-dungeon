@@ -11,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -54,6 +55,12 @@ public class DungeonFullController {
 	@FXML
 	private Pane mainpane;
 
+	@FXML
+    private CheckBox disablewitch;
+
+    @FXML
+    private CheckBox disablehound;
+    
 	// Internals
 	private Stage stage = null;
 	
@@ -206,7 +213,7 @@ public class DungeonFullController {
     private void loadDungeon(String pathname) throws FileNotFoundException {
     	clearDungeon();
     	// System.out.println(pathname);
-    	DungeonFullLoader dungeonLoader = new DungeonFullLoader(pathname);
+    	DungeonFullLoader dungeonLoader = new DungeonFullLoader(pathname, disablewitch.isSelected(), disablehound.isSelected());
     	this.loadedDungeon = dungeonLoader.load();
     	this.loadedDungeonPath = pathname;
     	Dungeon dungeon = this.loadedDungeon;
