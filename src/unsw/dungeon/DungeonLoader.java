@@ -20,9 +20,13 @@ import org.json.JSONTokener;
 public abstract class DungeonLoader {
 
     private JSONObject json;
-
-    public DungeonLoader(String filename) throws FileNotFoundException {
+    private boolean disableWitch;
+    private boolean disableHound;
+    
+    public DungeonLoader(String filename, boolean disableWitch, boolean disableHound) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
+        this.disableWitch = disableWitch;
+        this.disableHound = disableHound;
     }
 
     /**
@@ -125,6 +129,18 @@ public abstract class DungeonLoader {
             onLoad(enemy);
             entity = enemy;
             break;
+        case "hound":
+        	if (this.disableHound) return;
+            Hound hound = new Hound(dungeon, x, y);
+            onLoad(hound);
+            entity = hound;
+            break;
+        case "witch":
+        	if (this.disableWitch) return;
+            Witch witch = new Witch(dungeon, x, y);
+            onLoad(witch);
+            entity = witch;
+            break;
         default:
             break;
         }
@@ -143,6 +159,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Treasure treasure);
     public abstract void onLoad(Potion potion);
     public abstract void onLoad(Enemy enemy);
+    public abstract void onLoad(Hound hound);
+    public abstract void onLoad(Witch witch);
 
     private DungeonGoals loadGoals(JSONObject jsongoals, Dungeon dungeon){
         String type = jsongoals.getString("goal");
@@ -186,6 +204,11 @@ public abstract class DungeonLoader {
         return dGoals;
     }
 
+    /**
+     * Attach an observer for an exitGoal, so that the goal knows when it has been achieved
+     * @param Exit goal
+     * @param dungeon
+     */
     private void attachGoal(ExitGoal goal, Dungeon dungeon){
         Exit exit = dungeon.getExit();
         if (exit == null) throw new UnsupportedOperationException();
@@ -193,6 +216,11 @@ public abstract class DungeonLoader {
         exit.registerObserver(goal);
     }
 
+    /**
+     * Attach an observer to each of the enemies in the dungeon, so that the goal knows when it has been achieved
+     * @param EnemiesGoal
+     * @param dungeon
+     */
     private void attachGoal(EnemiesGoal goal, Dungeon dungeon){
         ArrayList<Enemy> enemies = dungeon.getEnemies();
         if (enemies.size() == 0) throw new UnsupportedOperationException();
@@ -202,7 +230,11 @@ public abstract class DungeonLoader {
             e.registerObserver(goal);
         }
     }
-
+    /**
+     * Attach an observer to each instance of treasure, so that the goal knows when it has been achieved
+     * @param TreasureGoal
+     * @param dungeon
+     */
     private void attachGoal(TreasureGoal goal, Dungeon dungeon){
         ArrayList<Treasure> treasures = dungeon.getTreasures();
         if (treasures.size() == 0) throw new UnsupportedOperationException();
@@ -211,7 +243,12 @@ public abstract class DungeonLoader {
             t.registerObserver(goal);
         }
     }
-
+    
+    /**
+     * Attach an observer to each floor switch, so that the goal knows when it has been achieved
+     * @param goal
+     * @param dungeon
+     */
     private void attachGoal(FloorSwitchGoal goal, Dungeon dungeon){
         ArrayList<FloorSwitch> fs = dungeon.getFloorSwitch();
         if (fs.size() == 0) throw new UnsupportedOperationException();

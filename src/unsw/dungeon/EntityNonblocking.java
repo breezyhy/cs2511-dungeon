@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the EntityNonblocking abstract class, used with entities in the dungeon that are nonblocking
+ */
 public abstract class EntityNonblocking extends Entity {
 
     public EntityNonblocking(int x, int y) {

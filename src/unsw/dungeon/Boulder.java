@@ -3,6 +3,9 @@ package unsw.dungeon;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Implements the boulder entity from the spec
+ */
 public class Boulder extends EntitySemiblocking implements Subject {
     private Dungeon dungeon;
     private int prevX, prevY;
@@ -23,12 +26,22 @@ public class Boulder extends EntitySemiblocking implements Subject {
     public int getPrevY() {
         return this.prevY;
     }
-
+    
+    /**
+     * Used for resolving collisions that can be induced from pushing a boulder
+     * @param x previous x-position
+     * @param y previous y-position
+     */
     private void setPrev(int x, int y) {
         prevX = x;
         prevY = y;
     }
-
+    /**
+     * Resolves collision for each entity with the boulder
+     * First checks for the player, then any movable objects in the dungeon
+     * @return true if it does collide
+     * @return false if it does not collide
+     */
     @Override
     public boolean resolveCollision(EntityMoveable obj) {
         // System.out.println("Resolving collision");
@@ -57,12 +70,15 @@ public class Boulder extends EntitySemiblocking implements Subject {
 
         return collide;
     }
-
+    /**
+     * Resolves collisions on any objects that are classed as blocking, such as bombs
+     * @return true regardless
+     */
     @Override
     public boolean resolveCollision(EntityBlocking obj) {
         if (obj instanceof Bomb_Lit) {
-            x().set(dungeon.getWidth() + 1);
-            y().set(dungeon.getHeight() + 1);
+            dungeon.removeEntity(this);
+            setVisibility(false);
         }
 
         return true;

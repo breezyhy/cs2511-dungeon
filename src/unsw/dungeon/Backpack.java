@@ -2,7 +2,9 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A class that stores the items (consumable) that a player is able to pick up
+ */
 public class Backpack {
     private List<EntityConsumable> itemList;
     private Dungeon dungeon;
@@ -12,25 +14,53 @@ public class Backpack {
         this.itemList = new ArrayList<>();
         this.dungeon = dungeon;
     }
-
+    
+    public List<EntityConsumable> getConsumableList(){
+    	return this.itemList;
+    }
+    
     public void addConsumables(EntityConsumable i) {
         itemList.add(i);
     }
-
+    
     public void removeConsumables(EntityConsumable i) {
         if (itemList.contains(i)) {
-            ((Entity) i).x().set(getStoringColumn() + 1);
+            ((Entity) i).setVisibility(false);
             itemList.remove(i);
+            itemSize--;
+            rearrange();
+        }
+    }
+    
+    public void dropConsumables(EntityConsumable i) {
+        if (itemList.contains(i)) {
+            itemList.remove(i);
+            itemSize--;
+            rearrange();
         }
     }
 
+    /**
+     * Rearrange items in the backpack to make the backpack interface looks neat
+     */
+    private void rearrange() {
+    	int i = 1;
+    	for (EntityConsumable x : itemList) {
+    		x.y().set(i);
+    		i++;
+    	}
+    }
+    
     public int getStoringColumn() {
         return this.dungeon.getWidth();
     }
-
-    // This function gets called by player in EntityConsumable collision
-    // Returns false if it doesn't get backpacked (because of restrictions)
-    // Returns true and the consumable will be backpacked by the backpack
+    
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Key k) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Key) {
@@ -38,11 +68,17 @@ public class Backpack {
             }
         }
         k.storeBackpack(this);
-        k.disappear(getStoringColumn(), itemSize);
+        k.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Potion p) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Potion) {
@@ -50,11 +86,17 @@ public class Backpack {
             }
         }
         p.storeBackpack(this);
-        p.disappear(getStoringColumn(), itemSize);
+        p.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Sword s) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Sword) {
@@ -62,18 +104,30 @@ public class Backpack {
             }
         }
         s.storeBackpack(this);
-        s.disappear(getStoringColumn(), itemSize);
+        s.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Treasure t) {
         t.storeBackpack(this);
-        t.disappear(getStoringColumn(), itemSize);
+        t.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
+    /**
+     * This function gets called by player in EntityConsumable collision
+     * Is repeated for each kind of consumable entity
+     * @return false if it doesn't get put in backpack
+     * @return true if able to be put in backpack, and is added to backpack 
+     */
     public boolean getConsumable(Bomb_Unlit b) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Bomb_Unlit) {
@@ -81,14 +135,16 @@ public class Backpack {
             }
         }
         b.storeBackpack(this);
-        b.disappear(getStoringColumn(), itemSize);
+        b.setStorage(getStoringColumn(), itemSize);
         itemSize++;
         return true;
     }
 
-    // If used, the item will be detached from itemlist, and returns true to any
-    // interface it's facing
-    // Also possibly switching others state
+    /**
+     * If player has a key, uses the key on the door
+     * @return true if key can be used on door and door unlocks
+     * @return false if player has no key
+     */
     public boolean useConsumable(Door d) {
         for (EntityConsumable e : itemList) {
             if (e instanceof Key) {
@@ -102,12 +158,13 @@ public class Backpack {
         return false;
     }
 
-    // Order of precedence:
-    // 1. Resolve enemy with current consumable and tickrate
-    // 2. Resolve bomb damage with current consumable and tickrate
-    // 3. Resolve the consumable storing method
-
-    // True means that the player are immune/has the required consumable
+    /**
+     * Using a consumable on an enemy follows an order of precedence
+     * 1. Resolve enemy with current consumable and tickrate
+     * 2. Resolve bomb damage with current consumable and tickrate
+     * 3. Resolve the consumable storing method
+     * @return true if player is immune/has required consumable
+     */
     public boolean useConsumable(Enemy e) {
         for (EntityConsumable p : itemList) {
             if (p instanceof Potion) {
@@ -125,11 +182,44 @@ public class Backpack {
         return false;
     }
 
-    // Takes x and y as current coordinate
-    public Bomb_Lit useBomb(int x, int y) {
-        Bomb_Lit bomb = new Bomb_Lit(dungeon, x, y);
-        // TODO instantiate new bomb inside the dungeon
-        return bomb;
+    
+    public boolean useConsumableWitch(Witch e) {
+        for (EntityConsumable p : itemList) {
+            if (p instanceof Potion) {
+                if (((Potion) p).stillActive())
+                    return true;
+            }
+        }
+        return false;
     }
 
+    
+    /**
+     * Places a lit bomb in the dungeon.
+     * @return 
+     */
+    public boolean useBomb() {
+    	for (EntityConsumable b : itemList) {
+    		if (b instanceof Bomb_Unlit) {
+    			((Bomb_Unlit) b).useBomb();
+    			return true;
+    		}
+    	}
+    	
+        return false;
+    }
+
+    
+    public void dropKey(int x, int y) {
+    	Key key = null;
+    	for (EntityConsumable k : itemList) {
+    		if (k instanceof Key) {
+    			key = (Key) k;
+    		}
+    	}
+    	if (key != null) {
+    		this.dropConsumables(key);
+    		key.drop(x, y);    		
+    	}
+    }
 }

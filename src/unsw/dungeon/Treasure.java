@@ -1,5 +1,8 @@
 package unsw.dungeon;
-
+/**
+ * Implements the treasure class as per the spec. Is used by TreasureGoal as well
+ * to keep track of end goals that a player has to achieve to complete the dungeon
+ */
 public class Treasure extends EntityConsumable implements MultipleSubject {
 
     private MultipleObserver treasureObserver = null;
@@ -13,7 +16,11 @@ public class Treasure extends EntityConsumable implements MultipleSubject {
     public boolean collected() {
         return this.collected;
     }
-
+    /**
+     * A method to resovle collision with other entities. Anything other than a player
+     * will move over it, a player will collect it first
+     * @return true for early returns
+     */
     @Override
     public boolean resolveCollision(EntityMoveable obj) {
         if (!(obj instanceof Player))

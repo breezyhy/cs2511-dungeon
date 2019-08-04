@@ -1,5 +1,7 @@
 package unsw.dungeon;
-
+/**
+ * Implements the EntityMoveable abstract class, used with entities in the dungeon that are moveable
+ */
 public abstract class EntityMoveable extends Entity {
 
     private Dungeon dungeon = null;
@@ -17,13 +19,19 @@ public abstract class EntityMoveable extends Entity {
 
     public void die() {
         // Placeholder of dead moveable
-        x().set(dungeon.getWidth() + 1);
-        y().set(dungeon.getHeight() + 1);
+    	this.setVisibility(false);
+    	dungeon.removeEntity(this);
+        //x().set(dungeon.getWidth() + 1);
+        //y().set(dungeon.getHeight() + 1);
         this.alive = false;
     }
 
     public boolean alive() {
         return this.alive;
+    }
+    
+    public void setAlive(boolean alive) {
+    	this.alive = alive;
     }
 
     public boolean resolveCollision(EntityConsumable obj) {

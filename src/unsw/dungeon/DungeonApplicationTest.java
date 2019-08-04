@@ -182,7 +182,7 @@ class DungeonApplicationTest {
 		Door d3 = new Door(2, 2, 3);
 		Boulder b1 = new Boulder(dungeon, 1, 2);
 		Key x1a = new Key(0, 0, 1);
-		Key x1b = new Key(1, 0, 2);
+		Key x1b = new Key(1, 0, 1);
 		Key x3 = new Key(0, 2, 3);
 		dungeon.addEntity(q1);
 		dungeon.addEntity(q2);
@@ -265,15 +265,15 @@ class DungeonApplicationTest {
 		e.registerObserver(goal);
 		// Exit has to be attached to player as observer
 		q1.registerObserver(e);
-		assertTrue(!goal.achieved());
+		assertTrue(!goal.achieved().get());
 		q1.moveRight();
-		assertTrue(!goal.achieved());
-		q1.moveRight();
-		q1.moveRight();
-		assertTrue(goal.achieved());
+		assertTrue(!goal.achieved().get());
 		q1.moveRight();
 		q1.moveRight();
-		assertTrue(goal.achieved());
+		assertTrue(goal.achieved().get());
+		q1.moveRight();
+		q1.moveRight();
+		assertTrue(goal.achieved().get());
 	}
 	
 	@Test

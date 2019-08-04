@@ -1,5 +1,9 @@
 package unsw.dungeon;
-
+/**
+ * Implements the floor switch entity that is used to achieve the Boulder goal as outlined in the spec
+ * @author z5161251
+ *
+ */
 public class FloorSwitch extends EntityNonblocking implements Observer, MultipleSubject {
 
     private FloorSwitchState state;
@@ -9,7 +13,11 @@ public class FloorSwitch extends EntityNonblocking implements Observer, Multiple
         super(x, y);
         this.state = new FloorSwitch_Off();
     }
-
+    
+    /**
+     * Switch state depending on whether there is currently a boulder on the switch or if there was a
+     * boulder that got moved off
+     */
     @Override
     public void update(Subject obj) {
         Boulder boulder = (Boulder) obj;
@@ -23,7 +31,10 @@ public class FloorSwitch extends EntityNonblocking implements Observer, Multiple
         }
 
     }
-
+    
+    /**
+     * Implements state switching as detailed in the State pattern
+     */
     private void switchState() {
         state.trigger(this);
         notifyObservers();

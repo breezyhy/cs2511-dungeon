@@ -613,6 +613,58 @@
         "y": 14,
         "type": "door",
         "id": 0
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "type": "key",
+        "id": 0
+      },
+      {
+        "x": 5,
+        "y": 14,
+        "type": "door",
+        "id": 1
+      },
+      {
+        "x": 15,
+        "y": 14,
+        "type": "wall"
+      },
+      {
+        "x": 3,
+        "y": 14,
+        "type": "wall"
+      },
+      {
+        "x": 4,
+        "y": 14,
+        "type": "exit"
+      },
+      {
+        "x": 14,
+        "y": 11,
+        "type": "enemy"
+      },
+      {
+        "x": 11,
+        "y": 14,
+        "type": "boulder"
+      },
+      {
+        "x": 11,
+        "y": 13,
+        "type": "wall"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "type": "wall"
+      },
+      {
+        "x": 2,
+        "y": 14,
+        "type": "bomb"
       }
     ],
     "goal-condition": {
@@ -623,6 +675,9 @@
         },
         {
           "goal": "treasure"
+        },
+        {
+          "goal": "exit"
         }
       ]
     }
